@@ -8,28 +8,65 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
-$this->params['breadcrumbs'][] = $this->title;
+// $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+   <!-- <h1><?= Html::encode($this->title) ?></h1> -->
 
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+<div>
+   
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
+    <div class="login_wrapper" id="admin-login">
+        <div class="">
+            <section class="login_content">
+                
+                <div id="logo"></div>
+                    <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => true]); ?>
 
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
-                <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
+                            <h1> &nbsp &nbsp <span class="fa fa-users"></span> Đăng nhập hệ thống &nbsp &nbsp</h1>
+                            <div>
+                                 
+                                <?= $form->field($model, 'username', [
+                                    'template' => '<div class="row"><div>{input}{error}</div></div>'
+                                ])->textInput(['autofocus' => true])
+                                ?>
 
-            <?php ActiveForm::end(); ?>
-        </div>
+                            </div>
+                            <div>
+                                 
+                                 <?= $form->field($model, 'password')->passwordInput()->label(false) ?>
+                            </div>
+                            <div>
+                                <a class="reset_pass"   href="#">Quên mật khẩu?</a>
+                                
+                                <div class="form-group">
+                                    <?= Html::submitButton('Đăng nhập', ['class' => 'btn btn-default submit', 'name' => 'login-button']) ?>
+                                </div>
+                                
+                            </div>
+
+
+
+                    <?php ActiveForm::end(); ?>
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+
+
+                        <div class="clearfix"></div>
+                        <br />
+
+                        <div>
+                            
+                            <p>©2016 All Rights Reserved.</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
     </div>
+
 </div>
+
+

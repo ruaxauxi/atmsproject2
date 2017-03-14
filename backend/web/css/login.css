@@ -1,0 +1,89 @@
+/*
+ * Proudly developed by Dylan Langlois for DesignModo.
+ * Twitter: @dylanbrendan
+ */
+
+
+.custom-bgcolor{
+     
+}
+
+#admin-login h1, p{
+    color: #F52227;
+}
+
+
+.login_content div .reset_pass {
+    color: #C03535;
+    text-shadow: 0.5px 0.5px #fff;
+    margin-top: 13px !important;
+    margin-left: 0px;
+    float: left;
+}
+
+
+.login_content .form-group .btn{
+    font-size: 12px;
+    margin-right: 0;
+    float: right;
+
+}
+
+#admin-login .login_content h1:before, #admin-login .login_content h1:after {
+    content: "";
+    height: 0px;
+    position: absolute;
+    top: 10px;
+    width: 27%;
+}
+
+
+#admin-login input[type="text"], #admin-login input[type="password"]{
+    background: #E1E1E1 url(images/login-sprite.png) no-repeat;
+    padding: 15px 15px 15px 30px;
+    margin: 0 0 10px 0;
+    width: 353px;
+    height: 42px;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+    box-shadow: 0 1px 1px #ccc inset, 0 1px 0 #fff;
+
+}
+
+#admin-login input:focus
+{
+    background-color: #C03535;
+    border-color: #e8c291;
+    color: #000;
+    font-weight: bold;
+    outline: none;
+    -moz-box-shadow: 0 0 0 1px #e8c291 inset;
+    -webkit-box-shadow: 0 0 0 1px #e8c291 inset;
+    box-shadow: 0 0 0 1px #e8c291 inset;
+}
+
+
+#username{
+    background-position: 10px -5px !important;
+}
+
+#password {
+    background-position: 8px -52px !important;
+}
+
+#logo {
+    margin: auto;
+    width: 123px;
+    height: 115px;
+    background: url("images/logo.png");     
+    background-size:     cover;                     
+    background-repeat:   no-repeat;
+    background-position: center center; 
+    display: block;
+
+    margin-bottom: 30px;
+}

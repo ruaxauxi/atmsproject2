@@ -5,7 +5,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
 
 /**
  * Site controller
@@ -60,7 +60,9 @@ class MainController extends Controller
      */
     public function actionIndex()
     {
+
         return $this->render('index');
+
     }
 
     /**
@@ -70,14 +72,19 @@ class MainController extends Controller
      */
     public function actionLogin()
     {
+        //echo Yii::$app->getSecurity()->generatePasswordHash("dang");
+        //die;
+
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
+         
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
+            $this->layout = "login";
             return $this->render('login', [
                 'model' => $model,
             ]);
