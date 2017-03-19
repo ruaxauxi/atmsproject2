@@ -15,10 +15,12 @@ class LoginAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/login.css'
+        'css/login.css',
+        'css/pnotify.custom.min.css'
     ];
     public $js = [
-        'js/login.js'
+        'js/login.js',
+        'js/pnotify.custom.min.js'
     ];
 
     /*
