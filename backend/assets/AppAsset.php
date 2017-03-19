@@ -13,8 +13,10 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         //'css/site.css',
+        'css/pnotify.custom.min.css',
     ];
     public $js = [
+       // 'js/pnotify.custom.min.js',
     ];
 
     /*

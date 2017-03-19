@@ -38,18 +38,15 @@ $bundle  = LoginAsset::register($this);
     <div class="container body">
 
         <div class="main_container">
+            <div class="row">
+                <div   role="main">
+                    <!-- page content -->
+                    <?= $content ?>
+                    <!-- /page content -->
 
-            <div   role="main">
-                <!-- page content -->
-                <?= $content ?>
-                <!-- /page content -->
-
+                </div>
             </div>
-
-
-
         </div>
-
     </div>
 
 <?php $this->endBody(); ?>

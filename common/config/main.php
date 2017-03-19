@@ -1,6 +1,7 @@
 <?php
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'language'  => 'vi',
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -11,10 +12,7 @@ return [
     				'rules' => [
     				],
     	],
-
-
-
-    ],
+        ],
 	'modules'	=> [
 		/* 'user'	=> [
 				'class' => 'dektrium\user\Module',

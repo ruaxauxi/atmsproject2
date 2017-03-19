@@ -33,8 +33,10 @@ interface UserStatus{
 interface UserType{
     const ADMIN = 1;
     const STAFF =2;
-    const PREFERRED_CUSTOMER = 4;
-    const RETAIL_CUSTOMER = 3;
+    const COLLABORATOR = 3;
+    const RETAIL_CUSTOMER = 4;
+    const PREFERRED_CUSTOMER = 5;
+    
 }
 
 interface PassengerType{

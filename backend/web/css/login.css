@@ -1,15 +1,24 @@
-/*
- * Proudly developed by Dylan Langlois for DesignModo.
- * Twitter: @dylanbrendan
- */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700);
 
-
-.custom-bgcolor{
-     
-}
 
 #admin-login h1, p{
     color: #F52227;
+}
+ 
+.login-wrapper{
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+    overflow:auto;
+}
+
+.login_content{
+    
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+     
+    overflow: auto;
 }
 
 
@@ -20,7 +29,6 @@
     margin-left: 0px;
     float: left;
 }
-
 
 .login_content .form-group .btn{
     font-size: 12px;
@@ -41,6 +49,7 @@
 #admin-login input[type="text"], #admin-login input[type="password"]{
     background: #E1E1E1 url(images/login-sprite.png) no-repeat;
     padding: 15px 15px 15px 30px;
+    margin: auto;
     margin: 0 0 10px 0;
     width: 353px;
     height: 42px;
@@ -54,36 +63,117 @@
 
 }
 
-#admin-login input:focus
-{
-    background-color: #C03535;
-    border-color: #e8c291;
-    color: #000;
-    font-weight: bold;
-    outline: none;
-    -moz-box-shadow: 0 0 0 1px #e8c291 inset;
-    -webkit-box-shadow: 0 0 0 1px #e8c291 inset;
-    box-shadow: 0 0 0 1px #e8c291 inset;
-}
-
-
-#username{
-    background-position: 10px -5px !important;
-}
-
-#password {
-    background-position: 8px -52px !important;
-}
 
 #logo {
     margin: auto;
     width: 123px;
     height: 115px;
-    background: url("images/logo.png");     
-    background-size:     cover;                     
+    background: url("images/logo.png");
+    background-size:     cover;
     background-repeat:   no-repeat;
-    background-position: center center; 
+    background-position: center center;
     display: block;
 
     margin-bottom: 30px;
 }
+
+.login-icon{
+    background: url("images/loginicon.png");
+    width: 48px;
+    height: 48px;
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+    display: inline-block;
+    position: absolute;
+    left: 5px;
+    top: -20px;
+}
+
+
+#loginForm .login-form {
+  position:relative;
+  width: 390px ;
+  margin:20px auto;
+  text-align:center;
+  background:#ecf0f1;
+  padding:40px;
+  -webkit-border-radius:10px 10px 10px 10px;
+   -moz-border-radius:10px 10px 10px 10px;
+  border-radius:10px 10px 10px 10px;
+  -webkit-box-shadow: 1px 1px 22px 3px rgba(227,227,227,1);
+-moz-box-shadow: 1px 1px 22px 3px rgba(227,227,227,1);
+box-shadow: 1px 1px 22px 3px rgba(227,227,227,1);
+   
+}
+
+#loginForm h1 {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: bold;
+  margin-bottom:30px;
+  padding-left: 35px;
+  
+}
+
+#loginForm h1:before, #loginForm h1:after {
+    content: ""; 
+    height: 0px;
+    position: absolute;
+    top: 30px;
+    width: 7%;
+}
+ 
+
+#loginForm input[type=text], #loginForm input[type=password] {
+  background: #E1E1E1 url(images/login-sprite.png) no-repeat;
+  display:block;
+  width:315px;
+  padding:14px;
+  -webkit-border-radius:6px;
+     -moz-border-radius:6px;
+          border-radius:6px;
+  border:0;
+  margin-bottom:12px;
+  color:#7f8c8d;
+  font-weight:600;
+  font-size:16px;
+}
+
+
+#username{
+    background-position: 10px 0px !important;
+    padding-left: 30px !important;
+}
+
+#password {
+    background-position: 10px -49px !important;
+    padding-left: 30px !important;
+}
+
+#rememberme{
+    display: inline !important;
+
+    float: left;
+
+}
+
+
+#loginForm input[type=text]:focus, #loginForm input[type=password]:focus{
+    background-color: #fff;
+    border: 1px solid #F52227;
+}
+
+#reset-pass{
+    margin: 10px;
+}
+
+#btn-submit{
+    float: right;
+   
+    height: 48px;
+    width: 120px;
+    margin-right: -2px;
+    
+}
+
+
