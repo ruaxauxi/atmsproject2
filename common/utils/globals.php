@@ -36,7 +36,6 @@ interface UserType{
     const COLLABORATOR = 3;
     const RETAIL_CUSTOMER = 4;
     const PREFERRED_CUSTOMER = 5;
-    
 }
 
 interface PassengerType{
