@@ -16,7 +16,8 @@ class AppAsset extends AssetBundle
         
     ];
     public $js = [
-       'js/home.js',
+
+        'js/home.js',
     ];
 
     /*
@@ -29,6 +30,7 @@ class AppAsset extends AssetBundle
         'atms\themes\admin\ThemeAsset',
         'atms\themes\admin\PNotifyAsset',
         'atms\themes\admin\ExtensionAsset',
+        'atms\themes\admin\DataTablesAsset',
         
     ];
 

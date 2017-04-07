@@ -13,7 +13,11 @@ return [
     				'rules' => [
     				],
     	],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'nullDisplay' => '',
         ],
+    ],
 	'modules'	=> [
 		/* 'user'	=> [
 				'class' => 'dektrium\user\Module',

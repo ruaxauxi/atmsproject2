@@ -13,7 +13,7 @@ use atms\models\UserProfile;
 /**
  * Site controller
  */
-class MainController extends Controller {
+class DashboardController extends Controller {
 
     /**
      * @inheritdoc

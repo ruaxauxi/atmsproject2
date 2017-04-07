@@ -29,7 +29,7 @@ return [
              'class' => 'atms\components\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-atms', 'httpOnly' => true],
-        	'loginUrl'	=> array('main/login'),
+        	'loginUrl'	=> array('dashboard/login'),
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -45,18 +45,18 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'main/error',
+            'errorAction' => 'dashboard/error',
         ],
       
         'urlManager' => [
             //'enablePrettyUrl' => true,
             //'showScriptName' => false,
             'rules' => [
-            		'/login'	=> '/main/login',
-            		'/logout'	=> 'main/logout',
-            		'/'	=> '/main/index',
-            		'/error'      => '/main/error',
-                                '/airport'   =>  '/airport/index',
+            		'/login'	=> '/dashboard/login',
+            		'/logout'	=> 'dashboard/logout',
+            		'/'	        => '/dashboard/index',
+            		'/error'      => '/dashboard/error',
+                    '/customer'   =>  '/customer/index',
             ],
         ],
         /*'view' => [
@@ -73,5 +73,5 @@ return [
         
     ],
     'params' => $params,
-    'defaultRoute' => 'main',
+    'defaultRoute' => 'dashboard',
 ];

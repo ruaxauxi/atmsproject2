@@ -318,7 +318,7 @@ $bundle = AppAsset::register($this);
                                 <li>
                                     <a>
                       <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                        <img src="" alt="Profile Image" />
                                     </span>
                                         <span>
                                         <span>John Smith</span>
@@ -332,7 +332,7 @@ $bundle = AppAsset::register($this);
                                 <li>
                                     <a>
                       <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                        <img src="" alt="Profile Image" />
                                     </span>
                                         <span>
                                         <span>John Smith</span>
@@ -346,7 +346,7 @@ $bundle = AppAsset::register($this);
                                 <li>
                                     <a>
                       <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                        <img src="" alt="Profile Image" />
                                     </span>
                                         <span>
                                         <span>John Smith</span>
@@ -360,7 +360,7 @@ $bundle = AppAsset::register($this);
                                 <li>
                                     <a>
                       <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                        <img src="" alt="Profile Image" />
                                     </span>
                                         <span>
                                         <span>John Smith</span>
@@ -390,7 +390,7 @@ $bundle = AppAsset::register($this);
         <!-- /top navigation -->
 
         <!-- page content -->
-        <div class="right_col" role="main">
+        <div class="right_col" role="main" id="main-content">
             <?php if (isset($this->params['h1'])): ?>
                 <div class="page-title">
                     <div class="title_left">
@@ -415,9 +415,22 @@ $bundle = AppAsset::register($this);
         <!-- /page content -->
         <!-- footer content -->
         <footer>
-            <div class="pull-right">
-                
-                Extension for Yii framework 2 by <a href="http://yiister.ru" rel="nofollow" target="_blank">Yiister</a>
+            <div class="pull-left">
+                Copyright &copy 2017
+
+
+
+                <div class="panel panel-primary" id="loading"  style="display: none;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Loading...</h4>
+                    </div>
+                    <div class="panel-body">
+                        <span id="loadingMsg">Đang tải dữ liệu vui lòng chờ giây lát.</span>
+                        <div id="imgLoading" ><img  src="<?=  Yii::getAlias('@web'). '/images/loading_red.gif' ; ?>"/></div>
+                    </div>
+                </div>
+
+
             </div>
             <div class="clearfix"></div>
         </footer>
@@ -432,6 +445,9 @@ $bundle = AppAsset::register($this);
     <div class="clearfix"></div>
     <div id="notif-group" class="tabbed_notifications"></div>
 </div>
+
+
+
 <!-- /footer content -->
 <?php $this->endBody(); ?>
 </body>

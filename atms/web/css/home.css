@@ -1,0 +1,214 @@
+
+/* 
+    Created on : Mar 21, 2017, 10:05:39 AM
+    Author     : dang vo <vhdang2302@gmail.com>
+*/
+
+#site-logo {
+     
+    width: 72px;
+    height: 68px;
+    background: url("images/site_logo.png");
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center;
+    display: block;
+    float:left;
+    margin-left: 5px;
+    margin-top: 5px ;
+   
+}
+
+#site_title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: 400;
+    font-size: 22px !important;
+    width: 100%;
+    color: #ECF0F1 !important;
+    margin: 0;
+    margin-left: 0 !important;
+    line-height: 59px;
+    display: block;
+    height: 70px;
+
+    padding-left: 10px;
+}
+
+
+
+
+.nav_menu{
+    background-color: #f63c3f;
+
+}
+
+
+
+
+
+.pointer{
+    cursor: pointer;
+}
+
+
+
+table.mytable {
+    border: 1px solid rgba(221, 221, 221, 0.78)
+}
+table.mytable thead {
+    background-color: #f63c3f;
+    color: #F2F2F2;
+    border-top: solid 1px #CC0609;
+    border-left: solid 1px #CC0609;
+    border-right: solid 1px #CC0609;
+}
+table.mytable thead a{
+    color: #F2F2F2 !important;
+}
+
+table.mytable tbody>tr>td{
+
+    padding:5px !important;
+}
+
+table.mytable tbody>tr>td a{
+    margin: 0 !important;
+}
+
+table.mytable tbody tr:hover td {
+    background: rgba(255, 0, 0, 0.07);
+
+
+    border-top: 1px solid rgba(38, 185, 154, 0.11);
+    border-bottom: 1px solid rgba(38, 185, 154, 0.11)
+}
+table.mytable tbody tr.selected {
+    background: rgba(38, 185, 154, 0.16)
+}
+table.mytable tbody tr.selected td {
+    border-top: 1px solid rgba(38, 185, 154, 0.4);
+    border-bottom: 1px solid rgba(38, 185, 154, 0.4)
+}
+
+table.mytable thead tr th a, .tbl-header thead tr th {
+    color: #D8D6D6;
+}
+
+table.mytable tbody > tr:nth-of-type(odd){
+    background-color: #EDEDED;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: #F52227;
+}
+
+.nav_menu, .top_nav .nav>li>a:focus, .top_nav .nav>li>a{
+    color: #F2F2F2 !important;
+}
+
+#menu_toggle{
+    color: #F2F2F2 !important;
+}
+
+.fa-female{
+    color: #06B000 !important;
+}
+
+.fa-male{
+    color: #FF0000 !important;
+}
+
+.modal-header {
+    padding: 5px !important;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #f63c3f;
+    border-radius: 3px;
+    height: 36px;
+}
+.modal-header>h2, .modal-title{
+    padding: 0;
+    color: #F2F2F2;
+    margin-top: 2px !important;
+    font-size: 18px !important;
+    font-weight: 400;
+}
+
+.modal-header .close{
+    margin-top: 0;
+
+}
+
+.btn-danger{
+    background-color: #f63c3f;
+}
+
+#loading{
+    display: block;
+
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    z-index: 100000;
+    /*background-color: #fff;
+    opacity: 0.25;
+    filter: alpha(opacity=50);*/
+    text-align: center;
+    -webkit-box-shadow: 1px 1px 22px 3px rgba(171,168,171,1);
+    -moz-box-shadow: 1px 1px 22px 3px rgba(171,168,171,1);
+    box-shadow: 1px 1px 22px 3px rgba(171,168,171,1);
+
+}
+#loading #imgLoading>img{
+    width: 48px;
+    height: 48px;
+}
+#loading #imgLoading{
+    margin:auto;
+}
+
+#loading .panel-title{
+    font-size: 14px;
+    color: #FFFFFF;
+    text-align: left;
+}
+
+#splash img{
+    width: 48px;
+    height: 48px;
+
+}
+
+.panel-primary > .panel-heading{
+    background-color: #f63c3f;
+    border-color: #F42225;
+}
+
+.panel-primary{
+    border-color: #F42225;
+}
+.fa-sm{
+    font-size: 14px;
+}
+
+.fa-md{
+    font-size: 18px;
+}
+.fa-bg{
+    font-size: 22px;
+}
+
+.icon-grey{
+    color: grey !important;
+    opacity:0.5;
+    filter:alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.pagination > .active > a, .pagination > .active > a:hover{
+    background-color: #f63c3f !important;
+    border: 1px solid #ddd;
+    -webkit-box-shadow: 0px 0px 5px 1px rgba(153,153,153,1);
+    -moz-box-shadow: 0px 0px 5px 1px rgba(153,153,153,1);
+    box-shadow: 0px 0px 5px 1px rgba(153,153,153,1);
+
+}

@@ -17,7 +17,6 @@ use common\utils\VARS;
  * @property string $password_hash
  * @property string $auth_key
  * @property string $password_reset_token
- * @property string $email
  * @property integer $status
  * @property string $avatar
  * @property integer usertype
@@ -27,15 +26,21 @@ use common\utils\VARS;
  */
 class User extends ActiveRecord implements IdentityInterface {
 
-    
-    //public $userProfile;
-    
+    const STATUS_INACTIVE = 0; // user deleted their account by themselves
+    const STATUS_DISABLED = 1;  // user is disabled by admins
+    const STATUS_UNAPPROVED = 2;  // use registered but have not verified yet
+    const STATUS_VERIFIED = 3;  // user verified by admin or by themselves  via email
+    const STATUS_ACTIVE = 4 ; // user is working
+    const STATUS_DELETED = 5; // user is deleted
+
     /**
      * @inheritdoc
      */
     public static function tableName() {
         return '{{%user}}';
     }
+
+    public $email;
 
     /**
      * @inheritdoc
@@ -65,9 +70,9 @@ class User extends ActiveRecord implements IdentityInterface {
      */
     public function rules() {
         return [
-            ['status', 'default', 'value' => VARS::USER_ACTIVE],
-            ['status', 'in', 'range' => [VARS::USER_ACTIVE, VARS::USER_DELETED, VARS::USER_DISABLED, 
-                                                VARS::USER_INACTIVE, VARS::USER_UNAPPROVED,VARS::USER_VERIFIED]],
+            ['status', 'default', 'value' => static::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [static::STATUS_ACTIVE, static::STATUS_DELETED, static::STATUS_DISABLED,
+                static::STATUS_INACTIVE, static::STATUS_UNAPPROVED,static::STATUS_VERIFIED]],
         ];
     }
 
@@ -75,7 +80,7 @@ class User extends ActiveRecord implements IdentityInterface {
      * @inheritdoc
      */
     public static function findIdentity($id) {
-        return static::findOne(['id' => $id, 'status' => VARS::USER_ACTIVE]);
+        return static::findOne(['id' => $id, 'status' => static::STATUS_ACTIVE]);
     }
 
     /**
@@ -92,7 +97,7 @@ class User extends ActiveRecord implements IdentityInterface {
      * @return static|null
      */
     public static function findByUsername($username) {
-        return static::findOne(['username' => $username, 'status' => VARS::USER_ACTIVE]);
+        return static::findOne(['username' => $username, 'status' => static::STATUS_ACTIVE]);
     }
 
     /**
@@ -108,7 +113,7 @@ class User extends ActiveRecord implements IdentityInterface {
 
         return static::findOne([
                     'password_reset_token' => $token,
-                    'status' => self::STATUS_USER_ACTIVE,
+                    'status' => self::STATUS_ACTIVE,
         ]);
     }
 
