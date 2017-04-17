@@ -28,6 +28,7 @@ class AppAsset extends AssetBundle
 
     public $depends = [
         'atms\themes\admin\ThemeAsset',
+        'atms\themes\admin\VelocityAsset',
         'atms\themes\admin\PNotifyAsset',
         'atms\themes\admin\ExtensionAsset',
         'atms\themes\admin\DataTablesAsset',

@@ -70,28 +70,35 @@ var setContentHeight = function () {
 };
 
   $SIDEBAR_MENU.find('a').on('click', function(ev) {
-	  console.log('clicked - sidebar_menu');
+
         var $li = $(this).parent();
 
         if ($li.is('.active')) {
-            $li.removeClass('active active-sm');
+            $li.removeClass('active active-sm').addClass('current-parent');
+
+            $li.find("span.fa").toggleClass('fa-chevron-up fa-chevron-down');
+
+
             $('ul:first', $li).slideUp(function() {
+
                 setContentHeight();
             });
         } else {
             // prevent closing menu if we are on child menu
             if (!$li.parent().is('.child_menu')) {
-                $SIDEBAR_MENU.find('li').removeClass('active active-sm');
+                $SIDEBAR_MENU.find('li').removeClass('active active-sm current-parent');
                 $SIDEBAR_MENU.find('li ul').slideUp();
             }else
             {
 				if ( $BODY.is( ".nav-sm" ) )
 				{
-					$SIDEBAR_MENU.find( "li" ).removeClass( "active active-sm" );
+					$SIDEBAR_MENU.find( "li" ).removeClass( "active active-sm current-parent" );
 					$SIDEBAR_MENU.find( "li ul" ).slideUp();
 				}
 			}
             $li.addClass('active');
+            $li.find("span.fa").toggleClass('fa-chevron-up fa-chevron-down');
+
 
             $('ul:first', $li).slideDown(function() {
                 setContentHeight();
@@ -101,14 +108,20 @@ var setContentHeight = function () {
 
 // toggle small or large menu 
 $MENU_TOGGLE.on('click', function() {
-		console.log('clicked - menu toggle');
-		
+
 		if ($BODY.hasClass('nav-md')) {
 			$SIDEBAR_MENU.find('li.active ul').hide();
 			$SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active');
+
+            $(this).find("i").removeClass("fa-angle-double-left").addClass("fa-angle-double-right");
+            $("#site-logo").removeClass("site_logo_normal").addClass("site_logo_small");
+            $("#site_name").hide();
 		} else {
 			$SIDEBAR_MENU.find('li.active-sm ul').show();
 			$SIDEBAR_MENU.find('li.active-sm').addClass('active').removeClass('active-sm');
+            $MENU_TOGGLE.find("i").removeClass("fa-angle-double-right").addClass("fa-angle-double-left");
+            $("#site-logo").removeClass("site_logo_small").addClass("site_logo_normal");
+            $("#site_name").show();
 		}
 
 	$BODY.toggleClass('nav-md nav-sm');
@@ -123,7 +136,7 @@ $MENU_TOGGLE.on('click', function() {
 		return this.href == CURRENT_URL;
 	}).parent('li').addClass('current-page').parents('ul').slideDown(function() {
 		setContentHeight();
-	}).parent().addClass('active');
+	}).parent().addClass('active').find("span.fa").removeClass('fa-chevron-down').addClass('fa-chevron-up');
 
 	// recompute content when resizing
 	$(window).smartresize(function(){  

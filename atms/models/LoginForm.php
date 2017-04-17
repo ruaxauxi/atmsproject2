@@ -25,7 +25,7 @@ class LoginForm extends Model
         return [
             // username and password are both required
             [['username', 'password'], 'required', 'message' => 'Nhập vào {attribute}'],
-            [['password'], "string","max" => 10, 'tooLong' => '{attribute} quá dài.', 'tooShort' => 'Mật khẩu quá ngắn.', "message" => "Nhập vào {attribute} chứa các ký tự."],
+            [['password'], "string","max" => 20, 'tooLong' => '{attribute} quá dài.', 'tooShort' => 'Mật khẩu quá ngắn.', "message" => "Nhập vào {attribute} chứa các ký tự."],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()

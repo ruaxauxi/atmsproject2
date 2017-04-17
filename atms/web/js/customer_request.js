@@ -12,7 +12,7 @@ $( document ).ready(function() {
     //spinner.spin("#main-content");
     $(".help-block-error").hide();
 
-    $("#frmCustomerCreate").on("afterValidate", function (event, messages) {
+    $("#frmCustomerReqCreate").on("afterValidate", function (event, messages) {
         $(".help-block-error").hide();
 
         $(".help-block-error").each(function(index){
@@ -30,21 +30,15 @@ $( document ).ready(function() {
         //alert("OK");
     });
 
-    $(document).on("click", '#btnCustomerSave', function(e){
-
-        //e.preventDefault();
-    });
-
-
 
     $(document).on("click", '#btnCustomerNew', function(e){
 
-      /* if ($('#custNewModal').data('bs.modal').isShown) {
+       if ($('#custNewModal').data('bs.modal').isShown) {
 
         } else {
             //if modal isn't open; open it and load content
             $('#custNewModal').modal('show');
-        }*/
+        }
 
 
         /*var url = $(this).data('url');
@@ -71,30 +65,8 @@ $( document ).ready(function() {
         });// ajax*/
     });
 
-    /*$(document).on("click", '#btnCustomerCreateClose', function(e){
-        $("#mdCustomerCreate").modal('hide');
-
-    });*/
-
-    // set Select2 auto open on focus
-    $(document).on("focus", ".select2-selection", function(e){
-        $(this).closest("div").find("select").select2('open');
-       // console.log($(this).closest("div").find("select").text());
-    });
-
-    $(document).on("change", "#ddlProvince, #ddlDistrict", function(e){
-
-        if ($(this).val().length){
-            reloadData(true);
-        }
 
 
-    });
-
-    $(document).on("click", "#btnSearch", function(e){
-        reloadData(false);
-
-    });
 
     $(document).on("change", "#per-page", function(e){
 
@@ -106,7 +78,7 @@ $( document ).ready(function() {
 
     function reloadData(submit){
         var params;
-        params  = "id=" + $("#txtCustomerID").val() + "&name=" + $("#txtCustomerName").val() + "&phone_number=" ;
+        params  = "id=" + $("#txtCustomerReqID").val() + "&name=" + $("#txtCustomerName").val() + "&phone_number=" ;
         params += $("#txtPhoneNumber").val() + "&province_id=" + $("#ddlProvince").val() + "&district_id=" + $("#ddlDistrict").val() ;
         preSubmit("#frmCustomers", "#paginator", params, submit);
     }
@@ -185,7 +157,7 @@ $( document ).ready(function() {
 
     $(document).on("dblclick", ".customer", function(e){
         var url = $(this).data("url");
-        showCustomerDetail(this,url);
+        showCustomerReqDetail(this,url);
     });
 
     $(document).on("click", '.view-customer', function(e){
@@ -194,14 +166,14 @@ $( document ).ready(function() {
         var url = $(this).prop("href");
        // console.log(this);
 
-        showCustomerDetail(this, url);
+        showCustomerReqDetail(this, url);
 
     });
 
-    function showCustomerDetail(e, url){
+    function showCustomerReqDetail(e, url){
 
         var fullname = $(e).data("customer_fullname");
-        $("#customerDetailModal").find('.modal-title').text(fullname);
+        $("#customerReqDetailModal").find('.modal-title').text(fullname);
 
         $.ajax({
             url:url,
@@ -210,15 +182,15 @@ $( document ).ready(function() {
             dataType: "HTML",
             error: function(xhr,status,errmgs){},
             beforeSend: function(){
-                $("#loading").fadeIn(100);
+                $("#loading").fadeIn(200);
             },
             complete: function(){
                 $("#loading").fadeOut(50);
-                $("#customerDetailModal").modal('show');
+                $("#customerReqDetailModal").modal('show');
             },
             success: function(data){
 
-                $("#customerDetailModal").find(".modal-body").html(data);
+                $("#customerReqDetailModal").find(".modal-body").html(data);
 
             }
 
@@ -226,7 +198,7 @@ $( document ).ready(function() {
 
     }
 
-    $('#customerDetailModal').on('show.bs.modal', function (event) {
+    $('#customerReqDetailModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);// Button that triggered the modal
 
 
@@ -243,16 +215,16 @@ $( document ).ready(function() {
 
 
 
-    $("#customer_list").on('pjax:send', function(e) {
+    $("#customer_req_list").on('pjax:send', function(e) {
 
         $("#loading").fadeIn(200);
     });
 
-    $("#customer_list").on('pjax:beforeSend', function(xhr, opt) {
+    $("#customer_req_list").on('pjax:beforeSend', function(xhr, opt) {
       //  console.log(opt);
     });
 
-    $("#customer_list").on('pjax:complete', function() {
+    $("#customer_req_list").on('pjax:complete', function() {
         $("#loading").fadeOut(200);
 
 

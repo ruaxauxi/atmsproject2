@@ -1,0 +1,16 @@
+/*
+ * Copyright (c) 2017 by Dang Vo
+ */
+
+
+
+
+
+table.mytable tbody tr:hover .view-customer{
+    color: #DF2800;
+
+    font-weight: bold;
+}
+
+
+

@@ -118,18 +118,21 @@ class UserProfile extends \yii\base\Model
     {
         $this->user_id = $user_id;
         $this->_user = $this->getUser();
-        
+
+
+
         if ($this->_user){
                 $this->username = $this->_user->username;
                 $this->created_at = $this->_user->getCreatedAt();
                 $this->last_updated = $this->_user->getLastUpdated();
                 $this->status = $this->_user->status;
                 $this->last_login= $this->_user->getLastLogin();
-                $this->email = $this->_user->email;
+               // $this->email = $this->_user->email;
                 $this->avatar =  $this->_user->avatar;
                 $this->usertype = $this->_user->usertype;
 
                 $employee = $this->getEmployee();
+
 
                 if ($employee){
                     $this->employee_id = $employee->id;
@@ -150,11 +153,8 @@ class UserProfile extends \yii\base\Model
                    }
          }
 
-            
         }
-       
-        
-        
+
     }
     
     
@@ -218,7 +218,7 @@ class UserProfile extends \yii\base\Model
      */
     public function getUser()
     {
-        return  User::findIdentity($this->user_id);
+        return User::findOne(['id' => $this->user_id]);
          
     }
     

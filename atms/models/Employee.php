@@ -17,6 +17,22 @@ use yii\db\ActiveRecord;
  */
 class Employee extends ActiveRecord
 {
+
+    // person table
+    public $firstname;
+    public $lastname;
+    public $middlename;
+    public $gender;
+    public $birthdate;
+    public $ssn;
+    public $email;
+    public $phone_number;
+
+    public $customer_id;
+    public $user_id;
+    public $person_id;
+    public $id;
+
     /**
      * @inheritdoc
      */
@@ -65,6 +81,11 @@ class Employee extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public  function getUserById($id)
+    {
+        return $this->hasOne(User::className(), ['id' => $id]);
     }
 
     /**

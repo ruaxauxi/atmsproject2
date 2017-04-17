@@ -2,7 +2,7 @@
 $(document).ready(function () {
     
     
-     $(".help-block-error").hide();
+    $(".help-block-error").hide();
     
     $("#login-form").on("beforeSubmit", function (event, messages, deferreds) {
         //alert("beforeSubmit event");

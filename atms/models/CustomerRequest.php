@@ -3,15 +3,17 @@
 namespace atms\models;
 
 use Yii;
+use atms\models\Customer;
+use atms\models\Employee;
 
 /**
- * This is the model class for table "customer_request".
+ * This is the model class for table "{{%customer_request}}".
  *
  * @property integer $id
  * @property integer $creator_id
  * @property integer $customer_id
  * @property string $from_airport
- * @property string $to_airpot
+ * @property string $to_airport
  * @property integer $ticket_class_id
  * @property string $departure
  * @property string $return
@@ -24,23 +26,27 @@ use Yii;
  * @property integer $adult
  * @property integer $children
  * @property integer $infant
+ * @property integer $deleted
  *
  * @property User $assignedTo
  * @property User $processedBy
  * @property Airport $fromAirport
- * @property Airport $toAirpot
+ * @property Airport $toAirport
  * @property Customer $customer
  * @property TicketClass $ticketClass
  * @property User $creator
  */
 class CustomerRequest extends \yii\db\ActiveRecord
 {
+
+    public $firstname;
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'customer_request';
+        return '{{%customer_request}}';
     }
 
     /**
@@ -49,15 +55,15 @@ class CustomerRequest extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['creator_id', 'customer_id', 'from_airport', 'to_airpot', 'ticket_class_id', 'departure', 'adult'], 'required'],
-            [['creator_id', 'customer_id', 'ticket_class_id', 'status', 'checked', 'processed_by', 'assigned_to', 'adult', 'children', 'infant'], 'integer'],
+            [['creator_id', 'customer_id', 'from_airport', 'to_airport', 'ticket_class_id', 'departure', 'adult'], 'required'],
+            [['creator_id', 'customer_id', 'ticket_class_id', 'status', 'checked', 'processed_by', 'assigned_to', 'adult', 'children', 'infant', 'deleted'], 'integer'],
             [['departure', 'return', 'created_at'], 'safe'],
             [['note'], 'string'],
-            [['from_airport', 'to_airpot'], 'string', 'max' => 3],
+            [['from_airport', 'to_airport'], 'string', 'max' => 3],
             [['assigned_to'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['assigned_to' => 'id']],
             [['processed_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['processed_by' => 'id']],
             [['from_airport'], 'exist', 'skipOnError' => true, 'targetClass' => Airport::className(), 'targetAttribute' => ['from_airport' => 'code']],
-            [['to_airpot'], 'exist', 'skipOnError' => true, 'targetClass' => Airport::className(), 'targetAttribute' => ['to_airpot' => 'code']],
+            [['to_airport'], 'exist', 'skipOnError' => true, 'targetClass' => Airport::className(), 'targetAttribute' => ['to_airport' => 'code']],
             [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
             [['ticket_class_id'], 'exist', 'skipOnError' => true, 'targetClass' => TicketClass::className(), 'targetAttribute' => ['ticket_class_id' => 'id']],
             [['creator_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creator_id' => 'id']],
@@ -74,7 +80,7 @@ class CustomerRequest extends \yii\db\ActiveRecord
             'creator_id' => 'Creator ID',
             'customer_id' => 'Customer ID',
             'from_airport' => 'From Airport',
-            'to_airpot' => 'To Airpot',
+            'to_airport' => 'To Airport',
             'ticket_class_id' => 'Ticket Class ID',
             'departure' => 'Departure',
             'return' => 'Return',
@@ -87,6 +93,7 @@ class CustomerRequest extends \yii\db\ActiveRecord
             'adult' => 'Adult',
             'children' => 'Children',
             'infant' => 'Infant',
+            'deleted' => 'Deleted',
         ];
     }
 
@@ -97,6 +104,22 @@ class CustomerRequest extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'assigned_to']);
     }
+    public function getExaminerInfo()
+    {
+        return $this->hasOne(Employee::className(),['person_id' => 'assigned_to'])
+            ->innerJoin("person", 'person.id = employee.person_id')
+            ->select("person.firstname, person.lastname, person.middlename, 
+             person.gender, person.birthdate, person.email, person.phone_number,person.ssn");
+    }
+
+    public function getExaminerFullname()
+    {
+        $a[] = $this->examinerInfo->lastname;
+        $a[] = $this->examinerInfo->middlename;
+        $a[] = $this->examinerInfo->firstname;
+
+        return implode(" ", array_filter($a));
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -105,6 +128,27 @@ class CustomerRequest extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'processed_by']);
     }
+
+    public function getHandlerInfo()
+    {
+        return $this->hasOne(Employee::className(),['person_id' => 'processed_by'])
+            ->innerJoin("person", 'person.id = employee.person_id')
+            ->select("person.firstname, person.lastname, person.middlename, 
+             person.gender, person.birthdate, person.email, person.phone_number,person.ssn");
+    }
+
+    public function getHandlerFullname()
+    {
+        if (! isset($this->handlerInfo)){
+            return null;
+        }
+        $a[] = $this->handlerInfo->lastname;
+        $a[] = $this->handlerInfo->middlename;
+        $a[] = $this->handlerInfo->firstname;
+
+        return implode(" ", array_filter($a));
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -117,9 +161,9 @@ class CustomerRequest extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getToAirpot()
+    public function getToAirport()
     {
-        return $this->hasOne(Airport::className(), ['code' => 'to_airpot']);
+        return $this->hasOne(Airport::className(), ['code' => 'to_airport']);
     }
 
     /**
@@ -128,6 +172,60 @@ class CustomerRequest extends \yii\db\ActiveRecord
     public function getCustomer()
     {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
+    }
+
+    public function getCustomerInfo()
+    {
+        return $this->hasOne(Customer::className(), ['id' => 'customer_id'])
+            ->innerJoin("person", "person.id = customer.person_id")
+            ->leftJoin("company","company.id = customer.company_id")
+            ->select('customer.id, user_id, person_id, company_id, person.firstname, person.lastname, person.middlename, 
+             person.gender as gender, person.birthdate, person.email, person.phone_number,person.ssn, company.company as company');
+
+    }
+
+    public function getCustomerFullname()
+    {
+        $a[] = $this->customerInfo->lastname;
+        $a[] = $this->customerInfo->middlename;
+        $a[] = $this->customerInfo->firstname;
+
+         return implode(" ", array_filter($a));
+    }
+
+    public function getCustomerCompanyName(){
+        if (! isset($this->customerInfo)){
+            return null;
+        }
+
+        return $this->customerInfo->company;
+    }
+
+    public function getCustomerGender()
+    {
+        return isset($this->customerInfo)?$this->customerInfo->gender:null;
+    }
+
+    public function getCustomerGenderText()
+    {
+
+        if (! isset($this->customerInfo)){
+            return null;
+        }
+
+        return $this->customerInfo->gender == Person::PERSON_FEMALE?"Nữ":"Nam";
+
+    }
+
+    public function getCustomerGenderIcon()
+    {
+
+        if (! isset($this->customerInfo)){
+            return null;
+        }
+
+        return $this->customerInfo->gender == Person::PERSON_FEMALE?"fa-female":"fa-male";
+
     }
 
     /**
@@ -146,12 +244,46 @@ class CustomerRequest extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'creator_id']);
     }
 
-    /**
-     * @inheritdoc
-     * @return CustomerRequestQuery the active query used by this AR class.
-     */
-    public static function find()
+
+
+    public function getCreatorInfo()
     {
-        return new CustomerRequestQuery(get_called_class());
+        return $this->hasOne(User::className(), ['id' => 'creator_id'])
+            ->innerJoin("employee", "user.id = employee.user_id")
+            ->innerJoin("person", "employee.person_id = person.id")
+            ->select('user.id, person_id, person.firstname, person.lastname, person.middlename, 
+             person.gender as gender, person.birthdate, person.email, person.phone_number,person.ssn')
+            ; //->where(['1' => '1']);
+
     }
+
+    public function getCreatorFirstname(){
+        if (!isset($this->creatorInfo)){
+            return null;
+        }
+        return $this->creatorInfo->firstname;
+    }
+
+    public function getCreatorFullname()
+    {
+
+        $a[] = $this->creatorInfo->lastname;
+        $a[] = $this->creatorInfo->middlename;
+        $a[] = $this->creatorInfo->firstname;
+
+        return implode(" ", array_filter($a));
+    }
+
+
+
+    public static function findRequestsInfo()
+    {
+        return static::find()->where(['deleted' => 0]);
+    }
+
+    public static function findRequestInfo($id)
+    {
+        return static::find()->where(['deleted' => 0, 'id' => $id]);
+    }
+
 }

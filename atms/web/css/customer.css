@@ -2,3 +2,42 @@
  * Copyright (c) 2017 by Dang Vo
  */
 
+
+#btnSearch{
+
+    color: #EDEDED;
+    margin: 0px;
+
+}
+
+#txtCustomerID{
+    margin-right: 5px;
+    width: 80px;
+}
+
+#txtPhoneNumber{
+    width: 120px;
+}
+
+
+
+table.mytable tbody tr:hover .view-customer{
+    color: #DF2800;
+
+    font-weight: bold;
+}
+
+#select2-ddlProvince-container, #select2-ddlDistrict-container{
+    width: 130px;
+}
+
+#select2-ddlSortBy-container{
+    width: 130px;
+}
+
+#divProvince, #divDistrict, #divSortBy{
+
+    margin-top: 10px;
+}
+
+

@@ -46,7 +46,7 @@ class Customer extends \yii\db\ActiveRecord
      * @property string $street
      * @property string $ward
      * @property string $district
-     * @property string $city
+     * @property string $province
      * @property string $phone
      * @property string $address_updated_at
      * @property integer $deleted
@@ -54,7 +54,7 @@ class Customer extends \yii\db\ActiveRecord
 
 
 
-   /* // person table
+   // person table
     public $firstname;
     public $lastname;
     public $middlename;
@@ -69,7 +69,6 @@ class Customer extends \yii\db\ActiveRecord
     // company
     public $company_id;
     public $company;
-
 
     // user table (optional)
     public $username;
@@ -87,10 +86,10 @@ class Customer extends \yii\db\ActiveRecord
     public $street;
     public $ward;
     public $district;
-    public $city;
+    public $province;
     public $phone;
     public $address_updated_at;
-    public $address_deleted;*/
+    public $address_deleted;
 
     public static function tableName()
     {
@@ -107,7 +106,7 @@ class Customer extends \yii\db\ActiveRecord
             [['user_id', 'person_id'], 'integer'],
             [['person_id'], 'required'],
             [['created_at'], 'safe'],
-            [['phone_number'], 'string', 'max' => 255],
+            //[['phone_number'], 'string', 'max' => 255],
             [['person_id'], 'exist', 'skipOnError' => true, 'targetClass' => Person::className(), 'targetAttribute' => ['person_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -127,20 +126,11 @@ class Customer extends \yii\db\ActiveRecord
             'deleted'       => 'Đã xoá',
             'fullName'  => "Họ",
             'firstName' => 'Tên',
-            'addressCity'   => 'Tỉnh/TP',
+            'addressProvince'   => 'Tỉnh/TP',
             'addressDistrict' => 'Khu vực'
         ];
     }
 
-    /* Getter for person full name */
-    /*public function getFullName() {
-        return $this->person->lastname . ' ' . $this->person->middlename . ' ' . $this->person->firstname;
-    }*/
-
-    /*public function getFirstName()
-    {
-        return $this->person->firstname;
-    }*/
 
     /**
      * @return \yii\db\ActiveQuery
@@ -156,7 +146,18 @@ class Customer extends \yii\db\ActiveRecord
     
     public function getCurrentAddress()
     {
-        return $this->hasOne(Address::className(), ["person_id" => 'person_id'])->where(['is_current' => 1, 'deleted' => Address::UNDELETED]);
+        
+        $address = $this->hasOne(Address::className(), ["person_id" => 'person_id'])
+            ->leftJoin("province", "province.id = address.province_id")
+            ->leftJoin("district", "district.id = address.district_id")
+            ->leftJoin("ward", "ward.id = address.ward_id")
+            ->select("address.house_number, address.street, ward.name as ward, district.name as district, province.name as province, address.phone")
+            ->where(['is_current' => 1, 'deleted' => Address::UNDELETED]);
+
+
+        return $address;
+        
+        //return $this->hasOne(Address::className(), ["person_id" => 'person_id'])->where(['is_current' => 1, 'deleted' => Address::UNDELETED]);
     }
 
     public function getAddressHouseNumber()
@@ -170,18 +171,19 @@ class Customer extends \yii\db\ActiveRecord
 
     public function getAddressWard()
     {
-        return isset($this->currentAddress)?$this->currentAddress->ward:null;
+        return isset($this->currentAddress->ward)?$this->currentAddress->ward:null;
     }
 
     public function getAddressDistrict()
     {
+
         return isset($this->currentAddress)?$this->currentAddress->district:null;
     }
 
-    public function getAddressCity()
+    public function getAddressProvince()
     {
 
-        return isset($this->currentAddress)?$this->currentAddress->city:null;
+        return isset($this->currentAddress->province)?$this->currentAddress->province:null;
     }
 
     public function getAddressPhone()
@@ -205,7 +207,7 @@ class Customer extends \yii\db\ActiveRecord
         $a[] = $this->currentAddress->street;
         $a[] = $this->currentAddress->ward;
         $a[] = $this->currentAddress->district;
-        $a[] = $this->currentAddress->city;
+        $a[] = $this->currentAddress->province;
 
         return implode(", ", array_filter($a));
     }
@@ -219,7 +221,7 @@ class Customer extends \yii\db\ActiveRecord
 
 
         $a[] = $this->currentAddress->district;
-        $a[] = $this->currentAddress->city;
+        $a[] = $this->currentAddress->province;
 
         return implode(", ", array_filter($a));
     }
@@ -404,7 +406,8 @@ class Customer extends \yii\db\ActiveRecord
             ->leftJoin("user", "`user`.`id` = " . static::tableName(). ".user_id")
            ->leftJoin("address", "address.person_id =  " . static::tableName().  ".`person_id`")
             ->leftJoin("company", "company.`id` = " . static::tableName().".company_id")
-            ->where(['customer.deleted' => static::UNDELETED]);
+            ->where(['customer.deleted' => static::UNDELETED])
+            ->groupBy(['customer.id']);
 
     }
 
@@ -413,12 +416,13 @@ class Customer extends \yii\db\ActiveRecord
         return static::find()
             ->innerJoin("person", "person.`id` = " . static::tableName().".person_id")
             ->leftJoin("user", "`user`.`id` = " . static::tableName(). ".user_id")
-           // ->leftJoin("address", "address.person_id =  person.`id`")
+            ->leftJoin("address", "address.person_id =  " . static::tableName().  ".`person_id`")
             ->leftJoin("company", "company.`id` = " . static::tableName().".company_id")
             ->where([
-                'customer.deleted' => static::UNDELETED,
-                'customer.`id`'   => $id
-            ]);
+                    'customer.deleted' => static::UNDELETED,
+                    'customer.id' => $id
+                ]
+            );
 
 
     }

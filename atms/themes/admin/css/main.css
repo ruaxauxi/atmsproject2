@@ -144,7 +144,7 @@ html , body{
     padding: 0 0 4px 0
 }
 .left_col {
-    background: #2A3F54
+    background: #262525
 }
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
@@ -313,16 +313,16 @@ html , body{
 .nav-sm .menu_section {
     margin: 0
 }
-.nav-sm span.fa,
-.nav-sm .menu_section h3 {
-    display: none
+.nav-sm .main_menu_side span.fa,
+.nav-sm .main_menu_side .menu_section h3 {
+    display: none;
 }
 .nav-sm li li span.fa {
     display: inline-block
 }
 .nav_menu {
     float: left;
-    background: #f63c3f;
+    background: rgba(138,6,8,0.85);
     border-bottom: 1px solid #D9DEE4;
     margin-bottom: 10px;
     width: 100%;
@@ -356,7 +356,7 @@ body .container.body .right_col {
 .nav_title {
     width: 230px;
     float: left;
-    background: #2A3F54;
+    background: #262525;
     border-radius: 0;
     height: 57px
 }
@@ -488,7 +488,7 @@ body .container.body .right_col {
 }
 body {
     color: #73879C;
-    background: #2A3F54;
+    background: #262525;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -720,6 +720,18 @@ a:focus {
     display: block;
     cursor: pointer
 }
+
+.nav.side-menu>li.current-parent
+{
+    border-right: 5px solid rgba(168,6,9, 0.85) ;
+
+}
+
+.nav.side-menu>li.current-parent>a
+{
+    color: #FC1717;
+}
+
 .nav.side-menu>li>a {
     margin-bottom: 6px
 }
@@ -795,7 +807,7 @@ a:focus {
 }
 .nav.side-menu>li.active>a {
     text-shadow: rgba(0, 0, 0, 0.25) 0 -1px 0;
-    background: linear-gradient(#334556, #2C4257), #2A3F54;
+    background: linear-gradient(#334556, #2C4257), #262525;
     box-shadow: rgba(0, 0, 0, 0.25) 0 1px 0, inset rgba(255, 255, 255, 0.16) 0 1px 0
 }
 .navbar-brand,
@@ -1523,7 +1535,7 @@ ul.msg_list li a .message {
 }
 .navbar-nav .open .dropdown-menu {
     position: absolute;
-    background: #f63c3f;
+    background: rgba(138,6,8,0.85);
     margin-top: 0;
     border: 1px solid #D9DEE4;
     -webkit-box-shadow: none;
@@ -1665,7 +1677,7 @@ span.right {
     padding: 5px 0 0 0;
     position: fixed;
     width: 230px;
-    background: #2A3F54;
+    background: #262525;
 	z-index:999;
 }
 .sidebar-footer a {
@@ -1675,7 +1687,8 @@ span.right {
     font-size: 17px;
     display: block;
     float: left;
-    background: #172D44;
+    background: rgba(168,6,9, 0.85) ;
+    color: #ffffff;
     cursor: pointer;
 }
 .sidebar-footer a:hover {

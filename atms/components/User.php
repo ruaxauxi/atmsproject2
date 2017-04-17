@@ -23,7 +23,8 @@ class User extends \yii\web\User {
     
     public function getUserProfile()
     {
-         
+
+
         $u = new UserProfile();
         $u->getUserProfile(\Yii::$app->user->identity->id);
         $this->userProfile = $u;

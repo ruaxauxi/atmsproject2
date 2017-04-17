@@ -38,10 +38,10 @@ $bundle = AppAsset::register($this);
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
 
-                <div class="navbar nav_title" style="border: 0;">
+                <div class="navbar " style="border: 0;">
                     <a href="/" id="site_title">
-                        <span id="site-logo"></span>
-                        <span><?= \Yii::getAlias("@sitename"); ?></span>
+                        <span id="site-logo" class="site_logo site_logo_normal" ></span>
+                        <span id="site_name"><?= \Yii::getAlias("@sitename"); ?></span>
                     </a>
                 </div>
                 <div class="clearfix"></div>
@@ -85,11 +85,11 @@ $bundle = AppAsset::register($this);
                                         "icon" => "users",
                                         "url" => "#",
                                         "items" => [
-                                            ["label" => "Thêm KH", "url" => ["site/menu"]],
-                                            ["label" => "DS Khách hàng", "url" => ["site/panel"]],
+                                            ["label" => "Thêm KH", "url" => ["customer/create"]],
+                                            ["label" => "DS Khách hàng", "url" => ["customer/index"]],
                                             ["label" => "DS Gởi thông báo", "url" => ["site/panel"]],
                                             ["label" => "Cập nhật KH", "url" => ["site/panel"]],
-                                            ["label" => "DS Yêu cầu đặt vé", "url" => ["site/panel"]],
+                                            ["label" => "DS Yêu cầu đặt vé", "url" => ["customer-request"]],
                                           
                                         ],
                                     ],
@@ -224,7 +224,7 @@ $bundle = AppAsset::register($this);
                                     [
                                         "label" => "Hệ thống",
                                         "url" => "#",
-                                        "icon" => "cog",
+                                        "icon" => "cogs",
                                         "items" => [
                                             [
                                                 "label" => "QL Hãng bay",
@@ -279,7 +279,7 @@ $bundle = AppAsset::register($this);
             <div class="nav_menu">
                 <nav class="" role="navigation">
                     <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        <a id="menu_toggle"><i class="fa fa-angle-double-left"></i></a>
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">

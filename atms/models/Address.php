@@ -12,8 +12,11 @@ use Yii;
  * @property string $house_number
  * @property string $street
  * @property string $ward
+ * @property string $ward_id
  * @property string $district
- * @property string $city
+ * @property string $district_id
+ * @property string $province
+ * @property string $province_id
  * @property string $phone
  * @property string $created_at
  * @property integer $is_current
@@ -26,6 +29,12 @@ class Address extends \yii\db\ActiveRecord
 
     const DELETED = 1;
     const UNDELETED = 0;
+
+    public $ward;
+    public $district;
+    public $district_id;
+    public $province;
+    public $province_id;
 
     /**
      * @inheritdoc
@@ -42,10 +51,10 @@ class Address extends \yii\db\ActiveRecord
     {
         return [
             [['person_id'], 'required'],
-            [['person_id', 'is_current', 'deleted'], 'integer'],
+            [['person_id', 'is_current', 'deleted',  'ward_id', 'district_id', 'province_id'], 'integer'],
             [['created_at'], 'safe'],
             [['house_number'], 'string', 'max' => 100],
-            [['street', 'ward', 'district', 'city', 'phone'], 'string', 'max' => 255],
+            [['street','phone'], 'string', 'max' => 255],
             [['person_id'], 'exist', 'skipOnError' => true, 'targetClass' => Person::className(), 'targetAttribute' => ['person_id' => 'id']],
         ];
     }
@@ -60,14 +69,20 @@ class Address extends \yii\db\ActiveRecord
             'person_id' => 'Person ID',
             'house_number' => 'House Number',
             'street' => 'Street',
-            'ward' => 'Ward',
-            'district' => 'District',
-            'city' => 'City',
+            'ward_id' => 'Ward',
+            'district_id' => 'District',
+            'province_id' => 'Province',
             'phone' => 'Phone',
             'created_at' => 'Created At',
             'is_current' => 'Is Current',
             'deleted' => 'Deleted',
         ];
+    }
+
+    public function isEmpty()
+    {
+        return empty($this->house_number)  && empty($this->street) && empty($this->ward_id) && empty($this->district_id)
+                && empty($this->province_id);
     }
 
     /**
@@ -81,5 +96,12 @@ class Address extends \yii\db\ActiveRecord
     public static function getCurrentAddress($person_id)
     {
         return static::findOne(['person_id' => $person_id, 'is_current' => 1]);
+    }
+
+    public  function findProvinceID()
+    {
+        $district = District::findOne(['id' => $this->district_id]);
+
+        $this->province_id = $district->province_id;
     }
 }
