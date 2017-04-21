@@ -34,18 +34,20 @@ class User extends ActiveRecord implements IdentityInterface {
     const STATUS_DELETED = 5; // user is deleted
 
     // person table
-  /*  public $firstname;
+    /*public $firstname;
     public $lastname;
     public $middlename;
     public $gender;
     public $birthdate;
     public $ssn;
     public $email;
-    public $phone_number;
+    public $phone_number;*/
 
-    public $customer_id;
-    public $person_id;
-    public $id;*/
+    //public $customer_id;
+   // public $person_id;
+   // public $id;
+
+
 
     /**
      * @inheritdoc

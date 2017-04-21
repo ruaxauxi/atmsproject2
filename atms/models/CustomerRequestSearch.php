@@ -16,12 +16,12 @@ use yii\helpers\ArrayHelper;
  */
 class CustomerRequestSearch extends CustomerRequest
 {
-    public $province_id;
+   /* public $province_id;
     public $district_id;
     public $name;
     public $phone_number;
     public $id;
-    public $sort_by;
+    public $sort_by;*/
 
     /**
      * @inheritdoc
@@ -69,7 +69,7 @@ class CustomerRequestSearch extends CustomerRequest
                 'pageSize' => Yii::$app->request->get('per-page',20),
 
             ],
-            'sort' => [
+            /*'sort' => [
                 'defaultOrder' => [
                     //    'person_id' => SORT_DESC,
                     //    'id' => SORT_ASC,
@@ -115,7 +115,7 @@ class CustomerRequestSearch extends CustomerRequest
                     ]
                 ]
 
-            ],
+            ],*/
 
         ]);
 

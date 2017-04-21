@@ -38,45 +38,43 @@ use yii\widgets\DetailView;
             ],
             'attributes' => [
                 [
-                    'label' => "Họ tên",
-                    'value' => $model->customerFullname
+                    'label' => "Họ tên khách hàng",
+                    'value' => "<i><b>" .$model->customerGenderTextTitle . "</b></i>:  ".  $model->customerFullname,
+                    'format' => 'raw'
                 ],
                 [
                     'label' => 'SĐT',
                     'value' =>  $model->customerInfo->phone_number
                 ],
                 [
-                    'label' => 'Phái',
-                    'value' => "<span class='fa fa-male " . ($model->customerGenderIcon=="fa-male"?"":"icon-grey")  ." fa-md' ></span>"
-                        . " <span class='fa fa-female " . ($model->customerGenderIcon=="fa-female"?"":"icon-grey")  ." fa-md' ></span>",
-                    'format'    => 'raw'
-                ],
-                [
                     'label' => 'ĐV công tác',
-                    'value' => $model->customerCompanyName
+                    'value' => $model->customerCompanyName->company
                 ],
                 [
-                        'label' => 'Chặn',
-                        'value' => $model->from_airport . "-" . $model->to_airport . " (" . $model->fromAirport->name . " - " .
-                            $model->toAirport->name. ")",
+                    'label' => 'Chặn',
+                    'value' => $model->fromAirport->name . " (" . $model->from_airport . ")"  . " - " .
+                        $model->toAirport->name. " (" . $model->to_airport .  ")",
                 ],
 
                 [
-                    'label' => 'Ngày đi',
-                    'value' => $model->departure,
-                    'format'    => ['date', 'dd-M-Y h:i:s']
+                    'label' => 'Ngày khởi hành',
+                    'value' => function($model){
+                        $formatter = \Yii::$app->formatter;
+
+                        return "Đi ngày <b>" . $formatter->asDate($model->departure, "dd-MM-yyyy") . "</b> - Về ngày <b>" .
+                            ($model->return?$formatter->asDate($model->return, "dd-MM-yyyy") . "</b>":"không đặt</b>");
+
+                    },
+                    'format'    => 'raw'
+
                 ],
-                [
-                    'label' => 'Ngày về',
-                    'value' => $model->return,
-                    'format'    => ['date', 'dd-M-Y']
-                ],
+
                 [
                     'label' => 'Số lượng vé',
                     'format'    => 'raw',
                     'value' =>  "<span class='badge bg-green'>$model->adult</span>".  " - người lớn" .
-                                (empty($model->children)?"":"; " . "<span class='badge bg-green'>$model->children</span>" . " - trẻ em") .
-                                    (empty($model->infant)?"":"; " ."<span class='badge bg-green'>$model->infant</span>" . " - em bé"),
+                        (empty($model->children)?"":"; " . "<span class='badge bg-green'>$model->children</span>" . " - trẻ em") .
+                        (empty($model->infant)?"":"; " ."<span class='badge bg-green'>$model->infant</span>" . " - em bé"),
                 ],
 
                 [
@@ -89,7 +87,7 @@ use yii\widgets\DetailView;
                 ],
                 [
                     'label' => 'Yêu cầu xử lý',
-                    'value' => $model->assignedTo->username,
+                    'value' => $model->examinerFullname . " (" . $model->assignedTo->username . ")",
                 ],
                 [
                     'label' => 'Người xử lý',
@@ -99,16 +97,15 @@ use yii\widgets\DetailView;
                 [
                     'label' => 'Ngày nhập',
                     'value' => $model->departure,
-                    'format'    => ['date', 'dd-M-Y h:i:s']
+                    'format'    => ['date', 'dd-M-Y H:i:s']
                 ],
                 [
                     'label' => 'Ngày xử lý',
-                    'value' => $model->departure,
-                    'format'    => ['date', 'dd-M-Y h:i:s']
-                ],
+                    'value' => $model->processed_at,
+                    'format'    => ['date', 'dd-M-Y H:i:s']
+                ]
 
-
-            ],
+            ]
         ]) ?>
 
 

@@ -131,7 +131,7 @@ class CustomerSearch extends Customer
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => Yii::$app->request->get('per-page',20),
+                'pageSize' => Yii::$app->request->get('per-page',15),
 
             ],
             'sort' => [

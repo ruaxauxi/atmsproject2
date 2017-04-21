@@ -10,6 +10,65 @@
 
 $( document ).ready(function() {
 
+
+    /*$("#panel-fullscreen").click(function (e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        if ($this.children('i').hasClass('glyphicon-resize-full'))
+        {
+            $this.children('i').removeClass('glyphicon-resize-full');
+            $this.children('i').addClass('glyphicon-resize-small');
+        }
+        else if ($this.children('i').hasClass('glyphicon-resize-small'))
+        {
+            $this.children('i').removeClass('glyphicon-resize-small');
+            $this.children('i').addClass('glyphicon-resize-full');
+        }
+        $(this).closest('.panel').toggleClass('panel-fullscreen');
+    });
+*/
+
+    // fullscreen trigger event
+
+    $(document).on("click", ".expand-link", function(e){
+
+        var target = $(this).data('target');
+
+        var container = $(this).data("reload");
+
+
+        if ($(this).find("i").hasClass("fa-expand")){
+            //$("body").fullScreen(true);
+            //screenfull.enabled;
+           // screenfull.request();
+
+
+            $(this).find("i").removeClass("fa-expand").addClass("fa-compress");
+            $(target).addClass("panel-fullscreen");
+            if (container){
+               /* $.pjax.reload({
+                    container: "#pjaxCustomerList",
+                    //timeout: 5000
+                });*/
+            }
+
+            //$("#divCustomerSection").addClass("modal");
+          //  $("#divCustomerSection").hide();
+        }else{
+            //screenfull.exit();
+            $(this).find("i").removeClass("fa-compress").addClass("fa-expand");
+            $(target).removeClass("panel-fullscreen");
+
+        }
+
+        //$(target).toggleClass('panel-fullscreen');
+
+    });
+
+
+
     // trigger show events
     jQuery(function($) {
 

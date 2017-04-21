@@ -28,10 +28,14 @@ class Employee extends ActiveRecord
     public $email;
     public $phone_number;
 
-    public $customer_id;
+
+    // user table
+    public $username;
+
+    /*public $customer_id;
     public $user_id;
-    public $person_id;
-    public $id;
+    public $person_id;*/
+    //public $id;
 
     /**
      * @inheritdoc

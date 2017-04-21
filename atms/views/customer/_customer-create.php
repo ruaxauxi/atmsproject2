@@ -17,7 +17,6 @@ use atms\widgets\depdrop\DepDrop;
 
 <div class="customer-form">
 
-
     <?php \yii\widgets\Pjax::begin() ?>
     <?php $form = ActiveForm::begin([
         'action' => Url::to([Yii::$app->controller->id .  "/create"]),

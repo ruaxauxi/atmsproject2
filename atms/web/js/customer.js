@@ -7,9 +7,7 @@
  */
 
 $( document ).ready(function() {
-    //$("#customer-table-id").DataTable();
 
-    //spinner.spin("#main-content");
     $(".help-block-error").hide();
 
     $("#frmCustomerCreate").on("afterValidate", function (event, messages) {
@@ -22,7 +20,7 @@ $( document ).ready(function() {
                 new PNotify({
                     title: 'Chú ý',
                     text: $(this).text(),
-                    type: 'error',
+                    type: 'warning',
                     styling: 'bootstrap3'
                 });
             }
@@ -154,7 +152,7 @@ $( document ).ready(function() {
         // page is an 'a' element in the list
         var url;
         var page = $(page).data("page") + 1;
-        var per_page = 20;
+        var per_page = 15;
 
         // get per-page value
         if ($(paginatorSelector).prev().length){
@@ -166,7 +164,6 @@ $( document ).ready(function() {
         url += "&" + params;
 
         $(page).prop("href", url);
-        console.log($(paginatorSelector).prev().val());
 
     }
 
@@ -243,16 +240,16 @@ $( document ).ready(function() {
 
 
 
-    $("#customer_list").on('pjax:send', function(e) {
+    $("#pjaxCustomerList").on('pjax:send', function(e) {
 
         $("#loading").fadeIn(200);
     });
 
-    $("#customer_list").on('pjax:beforeSend', function(xhr, opt) {
+    $("#pjaxCustomerList").on('pjax:beforeSend', function(xhr, opt) {
       //  console.log(opt);
     });
 
-    $("#customer_list").on('pjax:complete', function() {
+    $("#pjaxCustomerList").on('pjax:complete', function() {
         $("#loading").fadeOut(200);
 
 

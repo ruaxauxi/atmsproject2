@@ -17,6 +17,10 @@ return [
             'class' => 'yii\i18n\Formatter',
             'nullDisplay' => '',
         ],
+        'assetManager' => [
+            'class' => 'yii\web\AssetManager',
+            'forceCopy' => true,
+        ],
     ],
 	'modules'	=> [
 		/* 'user'	=> [

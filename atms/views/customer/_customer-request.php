@@ -230,11 +230,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         [
                                 'header'    => 'Người nhập',
-                                'value' => $model->creator //->firstname // . " (" . $model->creator->username . ")",
+                                'attribute' => "creatorFullname"  // $model->creatorInfo->username // . " (" . $model->creator->username . ")",
                         ],
                         [
                             'header'    => 'Yêu cầu xử lý',
-                            'attribute' => 'assignedTo.username'
+                            //'attribute' => 'assignedTo.username',
+                            'value' => function($model){
+                                    return $model->examinerInfo->username;
+                            }
                         ],
                         [
                             'header'    => 'Xử lý bởi',

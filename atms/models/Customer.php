@@ -67,8 +67,8 @@ class Customer extends \yii\db\ActiveRecord
     public $updated_at;
 
     // company
-    public $company_id;
-    public $company;
+   /* public $company_id;
+    public $company;*/
 
     // user table (optional)
     public $username;
@@ -360,11 +360,8 @@ class Customer extends \yii\db\ActiveRecord
         return static::findOne(["id" => $id]);
     }
 
-    /**
-     * @param $id
-     * @return CustomerInfo|null
-     */
-    public function getCustomerInfo($id)
+
+   /* public function getCustomerInfo($id)
     {
         $customer = static::findOne(['id' => $id]);
         if ($customer)
@@ -379,7 +376,7 @@ class Customer extends \yii\db\ActiveRecord
             return null;
         }
 
-    }
+    }*/
 
 
     /*public static function findCustomerInfo()

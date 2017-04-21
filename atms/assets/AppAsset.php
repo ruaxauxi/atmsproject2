@@ -16,7 +16,8 @@ class AppAsset extends AssetBundle
         
     ];
     public $js = [
-
+        'js/fullscreen.js',
+        'js/js.cookie.js',
         'js/home.js',
     ];
 

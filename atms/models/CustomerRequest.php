@@ -39,7 +39,7 @@ use atms\models\Employee;
 class CustomerRequest extends \yii\db\ActiveRecord
 {
 
-    public $firstname;
+
 
     /**
      * @inheritdoc
@@ -108,7 +108,8 @@ class CustomerRequest extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Employee::className(),['person_id' => 'assigned_to'])
             ->innerJoin("person", 'person.id = employee.person_id')
-            ->select("person.firstname, person.lastname, person.middlename, 
+            ->innerJoin("user", "employee.user_id = user.id")
+            ->select(" user.username, person.firstname, person.lastname, person.middlename, 
              person.gender, person.birthdate, person.email, person.phone_number,person.ssn");
     }
 
@@ -133,7 +134,8 @@ class CustomerRequest extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Employee::className(),['person_id' => 'processed_by'])
             ->innerJoin("person", 'person.id = employee.person_id')
-            ->select("person.firstname, person.lastname, person.middlename, 
+            ->innerJoin("user", "employee.user_id = user.id")
+            ->select(" user.username, person.firstname, person.lastname, person.middlename, 
              person.gender, person.birthdate, person.email, person.phone_number,person.ssn");
     }
 
@@ -217,6 +219,17 @@ class CustomerRequest extends \yii\db\ActiveRecord
 
     }
 
+    public function getCustomerGenderTextTitle()
+    {
+
+        if (! isset($this->customerInfo)){
+            return null;
+        }
+
+        return $this->customerInfo->gender == Person::PERSON_FEMALE?"Cô/Chị":"Ông/Anh";
+
+    }
+
     public function getCustomerGenderIcon()
     {
 
@@ -244,17 +257,13 @@ class CustomerRequest extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'creator_id']);
     }
 
-
-
     public function getCreatorInfo()
     {
-        return $this->hasOne(User::className(), ['id' => 'creator_id'])
-            ->innerJoin("employee", "user.id = employee.user_id")
-            ->innerJoin("person", "employee.person_id = person.id")
-            ->select('user.id, person_id, person.firstname, person.lastname, person.middlename, 
-             person.gender as gender, person.birthdate, person.email, person.phone_number,person.ssn')
-            ; //->where(['1' => '1']);
-
+           return $this->hasOne(Employee::className(),['person_id' => 'creator_id'])
+               ->innerJoin("person", 'person.id = employee.person_id')
+               ->innerJoin("user", "employee.user_id = user.id")
+               ->select("user.username, person.firstname, person.lastname, person.middlename, 
+             person.gender, person.birthdate, person.email, person.phone_number,person.ssn");
     }
 
     public function getCreatorFirstname(){
