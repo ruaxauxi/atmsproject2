@@ -148,7 +148,7 @@ html , body{
 }
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
-    width: 70px;
+    width: 60px;
     padding: 0;
     z-index: 9999;
     position: absolute
@@ -166,11 +166,11 @@ html , body{
 }
 .nav-sm .container.body .right_col {
     padding: 10px 20px;
-    margin-left: 70px;
+    margin-left: 60px;
     z-index: 2
 }
 .nav-sm .navbar.nav_title {
-    width: 70px
+    width: 60px
 }
 .nav-sm .navbar.nav_title a span {
     display: none
@@ -186,7 +186,7 @@ html , body{
 }
 .nav-sm .main_container .top_nav {
     display: block;
-    margin-left: 70px;
+    margin-left: 60px;
     z-index: 2
 }
 .nav-sm .nav.side-menu li a {
@@ -496,7 +496,7 @@ body {
 }
 .main_container .top_nav {
     display: block;
-    margin-left: 230px
+    margin-left: 220px
 }
 .no-padding {
     padding: 0 !important
@@ -874,7 +874,7 @@ a:focus {
     float: left;
     margin: 0;
     padding-top: 16px;
-    width: 70px
+    width: 60px
 }
 .toggle a {
     padding: 15px 15px 0;
@@ -891,7 +891,7 @@ a:focus {
 }
 .panel_toolbox {
     float: right;
-    min-width: 70px
+    min-width: 60px
 }
 .panel_toolbox>li {
     float: left;
@@ -921,7 +921,7 @@ footer {
     display: block
 }
 .nav-sm footer {
-    margin-left: 70px
+    margin-left: 60px
 }
 .footer_fixed footer {
     position: fixed;

@@ -40,4 +40,8 @@ table.mytable tbody tr:hover .view-customer{
     margin-top: 10px;
 }
 
+#divCustomerSection{
+    padding-left: 0;
+    padding-right: 0;
+}
 

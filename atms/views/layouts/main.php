@@ -38,7 +38,7 @@ $bundle = AppAsset::register($this);
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
 
-                <div class="navbar " style="border: 0;">
+                <div class="navbar  " style="border: 0;">
                     <a href="/" id="site_title">
                         <span id="site-logo" class="site_logo site_logo_normal" ></span>
                         <span id="site_name"><?= \Yii::getAlias("@sitename"); ?></span>
@@ -276,7 +276,7 @@ $bundle = AppAsset::register($this);
         <!-- top navigation -->
         <div class="top_nav">
 
-            <div class="nav_menu">
+            <div class="nav_menu ">
                 <nav class="" role="navigation">
                     <div class="nav toggle">
                         <a id="menu_toggle"><i class="fa fa-angle-double-left"></i></a>
