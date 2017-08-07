@@ -7,6 +7,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use atms\widgets\ExtraMenu;
 
 use atms\assets\AppAsset;
 $bundle = AppAsset::register($this);
@@ -29,7 +30,7 @@ $bundle = AppAsset::register($this);
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="nav-md">
+<body class="nav-sm">
 <?php $this->beginBody(); ?>
 <div class="container body">
 
@@ -40,8 +41,8 @@ $bundle = AppAsset::register($this);
 
                 <div class="navbar  " style="border: 0;">
                     <a href="/" id="site_title">
-                        <span id="site-logo" class="site_logo site_logo_normal" ></span>
-                        <span id="site_name"><?= \Yii::getAlias("@sitename"); ?></span>
+                        <span id="site-logo" class="site_logo site_logo_small" ></span>
+                        <span style="display: none;" id="site_name"><?= \Yii::getAlias("@sitename"); ?></span>
                     </a>
                 </div>
                 <div class="clearfix"></div>
@@ -50,7 +51,9 @@ $bundle = AppAsset::register($this);
                 <div class="profile">
                     <div class="profile_pic">
                         <?php 
-                                $url =  Url::base() . \Yii::getAlias("@avatar_url") . "/" . \Yii::$app->user->getAvatar();
+                                $url =  Url::base() . \Yii::getAlias("@avatar_url") . "/"
+                                   . (empty(\Yii::$app->user->getAvatar())? "default_" . \Yii::$app->user->getGender() . ".png"
+                                     :\Yii::$app->user->getAvatar());
                                 echo  Html::img($url, [ 'class' => 'img-circle profile_img', 'alt'   => '' ]);
                          ?>
                     </div>
@@ -74,7 +77,7 @@ $bundle = AppAsset::register($this);
                          
                         <h3>&nbsp;</h3>
                         <?=
-                        \yiister\gentelella\widgets\Menu::widget(
+                        ExtraMenu::widget(
                             [
                                 "items" => [
                                     ["label" => "Home", "url" => "/", "icon" => "home"],
@@ -85,11 +88,46 @@ $bundle = AppAsset::register($this);
                                         "icon" => "users",
                                         "url" => "#",
                                         "items" => [
-                                            ["label" => "Thêm KH", "url" => ["customer/create"]],
-                                            ["label" => "DS Khách hàng", "url" => ["customer/index"]],
-                                            ["label" => "DS Gởi thông báo", "url" => ["site/panel"]],
-                                            ["label" => "Cập nhật KH", "url" => ["site/panel"]],
-                                            ["label" => "DS Yêu cầu đặt vé", "url" => ["customer-request"]],
+                                            [
+                                                    "label" => "Thêm KH",
+                                                    "url" => ["customer/create-customer"],
+                                                    'icon'  => 'user'
+                                            ],
+                                            [
+                                                    "label" => "DS Khách hàng",
+                                                    "url" => ["customer/index"],
+                                                    'icon'  => 'user'
+                                            ],
+                                            [
+                                                    "label" => "DS Gởi thông báo",
+                                                    "url" => ["site/panel"],
+                                                    'icon'  => 'notify'
+                                            ],
+                                            [
+                                                    "label" => "Cập nhật KH",
+                                                    "url" => ["customer/update-customer"],
+                                                    'icon'  => 'edit'
+                                            ],
+                                            [
+                                                    "label" => "DS Yêu cầu đặt vé",
+                                                    "url" => ["/customer/view-customer-requests"],
+                                                    'icon'  => 'plane'
+                                            ],
+                                            [
+                                                'label' => 'Empty',
+                                                'url'   => '#',
+                                                'icon'  => 'ban'
+                                            ],
+                                            [
+                                                'label' => 'Empty',
+                                                'url'   => '#',
+                                                'icon'  => 'ban'
+                                            ],
+                                            [
+                                                'label' => 'Empty',
+                                                'url'   => '#',
+                                                'icon'  => 'ban'
+                                            ],
                                           
                                         ],
                                     ],
@@ -100,13 +138,16 @@ $bundle = AppAsset::register($this);
                                         "items" => [
                                             [
                                                 "label" => "Nhập yêu cầu đặt vé",
-                                                "url" => "#",
+                                                "url" => "/customer/create-customer-request",
+                                                'icon'  => 'plane'
                                                 //"badge" => "123",
                                             ],
                                             [
                                                 "label" => "DS yêu cầu",
                                                 "url" => "#",
-                                                "//badge" => "new",
+                                                'icon'  => 'plane'
+
+                                                //"badge" => "new",
                                                // "badgeOptions" => ["class" => "label-success"],
                                             ],
                                             [
@@ -119,62 +160,84 @@ $bundle = AppAsset::register($this);
                                              [
                                                 "label" => "Xuất vé",
                                                 "url" => "#",
+                                                 'icon'  => 'plane'
                                                 //"badge" => "!",
                                                
                                             ],
                                               [
                                                 "label" => "DS vé đã xuất",
                                                 "url" => "#",
+                                                'icon'  => 'plane'
                                                 //"badge" => "!",
                                                
                                             ],
                                               [
                                                 "label" => "Cập nhật vé",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                             ],
                                               [
                                                 "label" => "Thanh toán vé",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                                
                                             ],
                                               [
                                                 "label" => "Huỷ vé",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                                
                                             ],
                                               [
                                                 "label" => "Đổi vé",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                             ],
                                               [
                                                 "label" => "Hoàn vé",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                             ],
                                               [
                                                 "label" => "Xuất vé",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                             ],
                                               [
                                                 "label" => "DS vé huỷ ",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                             ],
                                               [
                                                 "label" => "DS vé hoàn",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                             ],
                                               [
                                                 "label" => "Chi tiết vé xuất",
                                                 "url" => "#",
+                                                  'icon'  => 'plane'
                                                 //"badge" => "!",
                                             ],
+                                            [
+                                                'label' => 'Empty',
+                                                'url'   => '#',
+                                                'icon'  => 'ban'
+                                            ],
+                                            [
+                                                'label' => 'Empty',
+                                                'url'   => '#',
+                                                'icon'  => 'ban'
+                                            ],
+
                                         ],
                                     ],
                                     
@@ -218,6 +281,17 @@ $bundle = AppAsset::register($this);
                                                 //"badge" => "!",
                                                
                                             ],
+                                            [
+                                                'label' => 'Empty',
+                                                'url'   => '#',
+                                                'icon'  => 'ban'
+                                            ],
+                                            [
+                                                'label' => 'Empty',
+                                                'url'   => '#',
+                                                'icon'  => 'ban'
+                                            ],
+
                                         ],
                                     ],
                                     
@@ -279,15 +353,21 @@ $bundle = AppAsset::register($this);
             <div class="nav_menu ">
                 <nav class="" role="navigation">
                     <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-angle-double-left"></i></a>
+                        <a id="menu_toggle"><i class="fa fa-angle-double-right"></i></a>
                     </div>
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <?php 
-                                        $url =  Url::base() . \Yii::getAlias("@avatar_url") . "/" . \Yii::$app->user->getAvatar();
-                                        echo  Html::img($url, [ 'class' => '', 'alt'   => '' ]);
+                                    <?php
+                                    $url =  Url::base() . \Yii::getAlias("@avatar_url") . "/"
+                                        . (empty(\Yii::$app->user->getAvatar())? "default_" . \Yii::$app->user->getGender() . ".png"
+                                            :\Yii::$app->user->getAvatar());
+
+                                        echo  Html::img($url, [
+                                                'class' =>  (empty(\Yii::$app->user->getAvatar())?"background-white":""),
+                                                'alt'   => ''
+                                        ]);
                                     ?>
                                     <?php echo Yii::$app->user->getFullname();?>
                                 <span class=" fa fa-angle-down"></span>

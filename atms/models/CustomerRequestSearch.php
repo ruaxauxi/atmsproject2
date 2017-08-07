@@ -16,6 +16,8 @@ use yii\helpers\ArrayHelper;
  */
 class CustomerRequestSearch extends CustomerRequest
 {
+
+
    /* public $province_id;
     public $district_id;
     public $name;
@@ -53,11 +55,11 @@ class CustomerRequestSearch extends CustomerRequest
      */
     public function search($params)
     {
+        $customer_id = $params['customer_id'];
 
-        $query = CustomerRequest::findRequestsInfo();
+        $query = CustomerRequest::findRequestsInfoByCustomerID($customer_id);
 
         // add conditions that should always apply here
-
 
 
         $this->load($params);
@@ -66,56 +68,10 @@ class CustomerRequestSearch extends CustomerRequest
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => Yii::$app->request->get('per-page',20),
+                'pageSize' => Yii::$app->request->get('per-page',25),
 
             ],
-            /*'sort' => [
-                'defaultOrder' => [
-                    //    'person_id' => SORT_DESC,
-                    //    'id' => SORT_ASC,
-                ],
-                'attributes' =>[
-                    'fullName' =>[
-                        'asc' => [
-                            'person.lastname' => SORT_ASC
-                        ],
-                        'desc' => [
-                            'person.lastname'   => SORT_ASC
-                        ],
-                        'default' => SORT_ASC
-                    ],
-                    'firstName' => [
-                        'asc' => [
-                            'person.firstname' => SORT_ASC
-                        ],
-                        'desc' => [
-                            'person.firstname'  => SORT_DESC
-                        ],
-                        'default' => SORT_ASC
-                    ],
-                    'addressProvince' => [
-                        'asc' => [
-                            'address.province' => SORT_ASC
-                        ],
-                        'desc' => [
-                            'address.province'  => SORT_DESC
-                        ],
-                        'default' => SORT_ASC
-                    ],
-                    'addressDistrict' => [
-                        'asc' => [
-                            'address.province' => SORT_ASC,
-                            'address.district' => SORT_ASC
-                        ],
-                        'desc' => [
-                            'address.province'  => SORT_DESC,
-                            'address.district'  => SORT_DESC,
-                        ],
-                        'default' => SORT_ASC
-                    ]
-                ]
 
-            ],*/
 
         ]);
 

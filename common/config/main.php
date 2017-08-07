@@ -21,6 +21,10 @@ return [
             'class' => 'yii\web\AssetManager',
             'forceCopy' => true,
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'defaultRoles'  => ['ADMIN', "STAFF", "COLLABORATOR", "CUSTOMER"]
+        ],
     ],
 	'modules'	=> [
 		/* 'user'	=> [

@@ -22,6 +22,8 @@ class CustomerRequestAsset extends AssetBundle
     ];
     public $js = [
         'js/customer_request.js',
+        'js/moment.2.18.1.min.js',
+
 
     ];
 

@@ -16,6 +16,9 @@ return [
     		/* 'user'	=> [
     				'class' => 'dektrium\user\Module'
     		] */
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ]
     		
     ],
     'components' => [
@@ -55,8 +58,10 @@ return [
             		'/login'	=> '/dashboard/login',
             		'/logout'	=> 'dashboard/logout',
             		'/'	        => '/dashboard/index',
+                    '/forbidden'    => '/dashboard/forbidden',
             		'/error'      => '/dashboard/error',
                     '/customer'   =>  '/customer/index',
+                    '/permission'   => '/permission/index',
             ],
         ],
         /*'view' => [

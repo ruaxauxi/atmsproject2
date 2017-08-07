@@ -14,7 +14,7 @@ use Yii;
  * @property string $country
  * @property string $utc_time
  * @property boolean $deleted
- * @property boolean $openning
+ * @property boolean $opening
  *
  * @property Flight $flight
  * @property Flight $flight0
@@ -59,7 +59,7 @@ class Airport extends \yii\db\ActiveRecord
             'country' => 'Quốc gia',
             'utc_time' => 'Múi giờ (UTC)',
             'deleted' => 'Xoá',
-            'openning' => 'Đang hoạt động',
+            'opening' => 'Đang hoạt động',
         ];
     }
 
@@ -93,5 +93,12 @@ class Airport extends \yii\db\ActiveRecord
     public function getRequests0()
     {
         return $this->hasMany(Request::className(), ['to_airpot' => 'code']);
+    }
+
+    public static function getAirportList()
+    {
+        return static::find()->select(['code','name', 'city'])
+            ->where(['deleted' => 0, 'using' => 1, 'opening' => 1])
+            ->orderBy(["name" => "ASC"])->all();
     }
 }

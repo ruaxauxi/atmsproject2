@@ -222,7 +222,7 @@ class Person extends ActiveRecord
      * @return string return Nam or Nu
      */
     public function getSex(){
-        return $this->gender== Gender::FEMALE?"Nữ":"Nam";
+        return $this->gender== static::PERSON_FEMALE ?"Nữ":"Nam";
     }
     
     public function getFullname(){

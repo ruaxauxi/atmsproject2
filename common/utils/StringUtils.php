@@ -66,10 +66,10 @@ namespace common\utils;
 
     public static function DateFormatConverter($date, $from, $to)
     {
-        if (($date)){
-            $str =  \DateTime::createFromFormat($from,$date)->format($to);
+        if (! empty($date)){
+            $str =  \DateTime::createFromFormat($from,$date);
             
-            return (!$str)?null:$str;
+            return (!$str)?null:$str->format($to);
         }
         return null;
     }

@@ -41,30 +41,87 @@ use yii\db\ActiveRecord;
  */
 class UserProfile extends \yii\base\Model
 {
-   
-        public $user_id;
-        public $employee_id;
-        public $person_id;
-        
-        public $username;
-        public $created_at;
-        public $last_updated;
-        public $status;
-        public $last_login;
-        public $email;
-        public $avatar;
-        public $usertype;
- 
-        public $employee_type;
 
- 
-        public $firstname;
-        public $middlename;
-        public $lastname;
-        public $gender;
-        public $birthdate;
-        public $fullname;
-        public $sex;
+    /**
+     * @var
+     */
+    public $user_id;
+    /**
+     * @var
+     */
+    public $employee_id;
+    /**
+     * @var
+     */
+    public $person_id;
+
+    /**
+     * @var
+     */
+    public $username;
+    /**
+     * @var
+     */
+    public $created_at;
+    /**
+     * @var
+     */
+    public $last_updated;
+    /**
+     * @var
+     */
+    public $status;
+    /**
+     * @var
+     */
+    public $last_login;
+    /**
+     * @var
+     */
+    public $email;
+    /**
+     * @var
+     */
+    public $avatar;
+    /**
+     * @var
+     */
+    public $usertype;
+
+    /**
+     * @var
+     */
+    public $employee_type;
+
+
+    /**
+     * @var
+     */
+    public $firstname;
+    /**
+     * @var
+     */
+    public $middlename;
+    /**
+     * @var
+     */
+    public $lastname;
+    /**
+     * @var
+     */
+    public $gender;
+    /**
+     * @var
+     */
+    public $birthdate;
+    /**
+     * @var
+     */
+    public $fullname;
+    /**
+     * @var
+     */
+    public $sex;
   
         private  $_user;
         private $_employee;
@@ -119,8 +176,6 @@ class UserProfile extends \yii\base\Model
         $this->user_id = $user_id;
         $this->_user = $this->getUser();
 
-
-
         if ($this->_user){
                 $this->username = $this->_user->username;
                 $this->created_at = $this->_user->getCreatedAt();
@@ -154,6 +209,7 @@ class UserProfile extends \yii\base\Model
          }
 
         }
+        return $this;
 
     }
     
@@ -234,5 +290,10 @@ class UserProfile extends \yii\base\Model
     public function getAvatar()
     {
         return $this->avatar;
+    }
+
+    public function getGender()
+    {
+        return ($this->gender == Person::PERSON_MALE ? "male" : "female");
     }
 }

@@ -30,6 +30,20 @@ $( document ).ready(function() {
     });
 */
 
+
+
+    $('.tooltipster-light').tooltipster({
+        theme: 'tooltipster-light'
+    });
+
+    $('.tooltipster-shadow').tooltipster({
+        theme: 'tooltipster-shadow'
+    });
+
+    $('.tooltipster-borderless').tooltipster({
+        theme: 'tooltipster-borderless'
+    });
+
     // fullscreen trigger event
 
     $(document).on("click", ".expand-link", function(e){

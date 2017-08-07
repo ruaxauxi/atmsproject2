@@ -3,7 +3,27 @@
  */
 
 
+#customer-req-table .actions
+{
+    margin-left: 5px;
 
+}
+
+#customer-req-table .actions:hover
+{
+    color: rgba(168,6,9, 0.85);
+}
+
+a.view_all:hover
+{
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+#txCustomerRequesttNote
+{
+    max-height: 94px;
+}
 
 
 table.mytable tbody tr:hover .view-customer{
@@ -13,4 +33,136 @@ table.mytable tbody tr:hover .view-customer{
 }
 
 
+#customer-request-create-form-step1 #paginator
+{
+   /* margin-top: -7px;*/
+}
 
+#customer-request-create-form-step1  #txtCustomerID
+{
+    max-width: 140px;
+}
+
+#customer-request-create-form-step1  #txtPhoneNumber
+{
+    max-width: 140px;
+}
+
+#customer-request-create-form-step1 #txtFullname
+{
+    max-width: 240px;
+}
+
+#customerRequestList button#btnAddNewRequest
+{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+#customerRequestList .well
+{
+    margin-bottom: 0;
+}
+
+#customerRequestList div.form-group, #customerRequestList div.input-group
+{
+    margin-bottom: 3px !important;
+}
+
+#customerRequestList div.date
+{
+    max-width: 240px;
+}
+
+#customerRequestList div.bootstrap-touchspin
+{
+    max-width: 140px;
+}
+
+#customerRequestList #customerrequestform-customer_id
+{
+    max-width: 80px;
+}
+
+.request-statuses
+{
+    text-align: center;
+}
+
+.chkRequestStatus
+{
+    text-align: center;
+
+}
+
+.request-status
+{
+    font-weight: 400;
+    font-size: larger;
+
+}
+
+.request-status-success
+{
+    font-weight: 400;
+    font-size: larger;
+    color: #06B000 !important;
+}
+
+.request-status-primary
+{
+    font-weight: 400;
+    font-size: larger;
+    color: rgba(168,6,9, 1); !important;
+}
+
+
+
+#customer-req-table table.mytable tbody>tr>td
+{
+    padding:2px !important;
+}
+
+#_customer-request-view
+{
+    background-color: #ffffff;
+}
+
+ .form-inline .control-label
+{
+    vertical-align: baseline !important;
+}
+
+#customer-req-table-id .kv-expand-detail-row > td
+{
+    background-color: #ffffff !important;
+}
+
+#_customer-request-view
+{
+    background-color: rgba(232, 232, 232, 0.85)
+}
+
+.tickets
+{
+    padding: 2px;
+    width: 30px !important;
+    text-align: center;
+}
+
+#divTickets .bootstrap-touchspin-down
+{
+    margin-right: 1px;
+}
+
+#divTickets .bootstrap-touchspin-up
+{
+    margin-right: 2px;
+    margin-left: 1px;
+
+}
+
+#divTickets label
+{
+    margin-right: 15px;
+}

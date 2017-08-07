@@ -3,6 +3,7 @@
 namespace atms\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 
 class Customer extends \yii\db\ActiveRecord
@@ -154,7 +155,6 @@ class Customer extends \yii\db\ActiveRecord
             ->select("address.house_number, address.street, ward.name as ward, district.name as district, province.name as province, address.phone")
             ->where(['is_current' => 1, 'deleted' => Address::UNDELETED]);
 
-
         return $address;
         
         //return $this->hasOne(Address::className(), ["person_id" => 'person_id'])->where(['is_current' => 1, 'deleted' => Address::UNDELETED]);
@@ -295,6 +295,17 @@ class Customer extends \yii\db\ActiveRecord
 
     }
 
+    public function getPersonTitle()
+    {
+
+        if (! isset($this->person)){
+            return null;
+        }
+
+        return $this->person->gender == Person::PERSON_FEMALE?"Bà/Chị":"Ông/Anh";
+
+    }
+
     public function getPersonGenderIcon()
     {
 
@@ -347,14 +358,23 @@ class Customer extends \yii\db\ActiveRecord
         return isset($this->company)?$this->company->website:null;
     }
 
+    public function getAddress()
+    {
+        return $this->hasOne(Address::className(),['id' => 'address_id']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getCustomerRequests()
     {
-        return $this->hasMany(CustomerRequest::className(), ['customer_id' => 'id']);
+        return $this->hasMany(CustomerRequests::className(), ['customer_id' => 'id']);
     }
 
+    /**
+     * @param $id
+     * @return ActiveRecord
+     */
     public function getCustomer($id)
     {
         return static::findOne(["id" => $id]);
@@ -401,7 +421,7 @@ class Customer extends \yii\db\ActiveRecord
         return static::find()
             ->innerJoin("person", "person.`id` = " . static::tableName().".person_id")
             ->leftJoin("user", "`user`.`id` = " . static::tableName(). ".user_id")
-           ->leftJoin("address", "address.person_id =  " . static::tableName().  ".`person_id`")
+           ->leftJoin("address", "address.`person_id` =  " . static::tableName().  ".`person_id`")
             ->leftJoin("company", "company.`id` = " . static::tableName().".company_id")
             ->where(['customer.deleted' => static::UNDELETED])
             ->groupBy(['customer.id']);
@@ -413,7 +433,7 @@ class Customer extends \yii\db\ActiveRecord
         return static::find()
             ->innerJoin("person", "person.`id` = " . static::tableName().".person_id")
             ->leftJoin("user", "`user`.`id` = " . static::tableName(). ".user_id")
-            ->leftJoin("address", "address.person_id =  " . static::tableName().  ".`person_id`")
+            ->leftJoin("address", "address.`person_id` =  " . static::tableName().  ".`person_id`")
             ->leftJoin("company", "company.`id` = " . static::tableName().".company_id")
             ->where([
                     'customer.deleted' => static::UNDELETED,

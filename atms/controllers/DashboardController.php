@@ -24,7 +24,7 @@ class DashboardController extends Controller {
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'forbidden'],
                         'allow' => true,
                     ],
                     [
@@ -111,4 +111,11 @@ class DashboardController extends Controller {
         return $this->render('error');
     }
 
+    public function actionForbidden()
+    {
+        return $this->render("forbidden", [
+            'title' => 'Giới hạn quyền',
+            'message'   => 'Bạn không có quyền truy cập vào chức năng này.'
+        ]);
+    }
 }

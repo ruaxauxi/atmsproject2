@@ -33,6 +33,15 @@ class User extends ActiveRecord implements IdentityInterface {
     const STATUS_ACTIVE = 4 ; // user is working
     const STATUS_DELETED = 5; // user is deleted
 
+
+
+    const ROLE_ADMIN        = "ADMIN";
+    const ROLE_STAFF        = "STAFF";
+    const ROLE_COLLABORATOR = "COLLABORATOR";
+    const ROLE_CUSTOMER     = "CUSTOMER";
+
+
+
     // person table
     /*public $firstname;
     public $lastname;
@@ -56,6 +65,25 @@ class User extends ActiveRecord implements IdentityInterface {
         return '{{%user}}';
     }
 
+    /**
+     * Returns user role name according to RBAC
+     *  use within view: Yii::$app->user->identity->getRoleName();
+     * @return string
+     */
+    public function getRoleName()
+    {
+        $roles = Yii::$app->authManager->getRolesByUser($this->id);
+        if (!$roles) {
+            return null;
+        }
+
+        // point to the first element
+        reset($roles);
+        /* @var $role \yii\rbac\Role */
+        $role = current($roles);
+
+        return $role->name;
+    }
 
     /**
      * @inheritdoc
@@ -217,6 +245,11 @@ class User extends ActiveRecord implements IdentityInterface {
     public function getUsername()
     {
         return isset($this->username)?$this->username:null;
+    }
+
+    public function getUserRole()
+    {
+        return isset($this->user_role)?$this->user_role:null;
     }
 
      /**

@@ -53,90 +53,130 @@ var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
 	
 // Sidebar
 function init_sidebar() {
-// TODO: This is some kind of easy fix, maybe we can improve this
-var setContentHeight = function () {
-	// reset height
-	$RIGHT_COL.css('min-height', $(window).height());
 
-	var bodyHeight = $BODY.outerHeight(),
-		footerHeight = $BODY.hasClass('footer_fixed') ? -10 : $FOOTER.height(),
-		leftColHeight = $LEFT_COL.eq(1).height() + $SIDEBAR_FOOTER.height(),
-		contentHeight = bodyHeight < leftColHeight ? leftColHeight : bodyHeight;
+	var setContentHeight = function () {
+		// reset height
+		$RIGHT_COL.css('min-height', $(window).height());
 
-	// normalize content
-	contentHeight -= $NAV_MENU.height() + footerHeight;
+		var bodyHeight = $BODY.outerHeight(),
+			footerHeight = $BODY.hasClass('footer_fixed') ? -10 : $FOOTER.height(),
+			leftColHeight = $LEFT_COL.eq(1).height() + $SIDEBAR_FOOTER.height(),
+			contentHeight = bodyHeight < leftColHeight ? leftColHeight : bodyHeight;
 
-	$RIGHT_COL.css('min-height', contentHeight);
-};
+		// normalize content
+		contentHeight -= $NAV_MENU.height() + footerHeight;
 
-  $SIDEBAR_MENU.find('a').on('click', function(ev) {
+		$RIGHT_COL.css('min-height', contentHeight);
+	};
+
+  	$SIDEBAR_MENU.find('a').on('click', function(ev) {
 
         var $li = $(this).parent();
 
-        if ($li.is('.active')) {
-            $li.removeClass('active active-sm').addClass('current-parent');
 
-            $li.find("span.fa").toggleClass('fa-chevron-up fa-chevron-down');
+		if ($li.is('.active')) {
 
 
-            $('ul:first', $li).slideUp(function() {
+			$li.removeClass('active active-sm').addClass('current-parent');
 
-                setContentHeight();
-            });
-        } else {
-            // prevent closing menu if we are on child menu
-            if (!$li.parent().is('.child_menu')) {
-                $SIDEBAR_MENU.find('li').removeClass('active active-sm current-parent');
-                $SIDEBAR_MENU.find('li ul').slideUp();
-            }else
-            {
+			$li.find("span.fa").toggleClass('fa-chevron-up fa-chevron-down');
+
+            if ( $BODY.is( ".nav-sm" ) )
+			{
+
+                $('ul:first', $li).hide(function() {
+
+                    setContentHeight();
+                });
+			}else{
+                $('ul:first', $li).slideUp(function() {
+
+                    setContentHeight();
+                });
+			}
+
+
+		} else {
+			// prevent closing menu if we are on child menu
+			if (!$li.parent().is('.child_menu')) {
+				$SIDEBAR_MENU.find('li').removeClass('active active-sm current-parent');
+
+                if ( $BODY.is( ".nav-sm" ) )
+				{
+                    $SIDEBAR_MENU.find('li ul').hide();
+				}else{
+                    $SIDEBAR_MENU.find('li ul').slideUp();
+				}
+
+
+			}else
+			{
 				if ( $BODY.is( ".nav-sm" ) )
 				{
 					$SIDEBAR_MENU.find( "li" ).removeClass( "active active-sm current-parent" );
-					$SIDEBAR_MENU.find( "li ul" ).slideUp();
+					$SIDEBAR_MENU.find( "li ul" ).hide();
 				}
 			}
+
             $li.addClass('active');
-            $li.find("span.fa").toggleClass('fa-chevron-up fa-chevron-down');
+
+			$li.find("span.fa").toggleClass('fa-chevron-up fa-chevron-down');
 
 
-            $('ul:first', $li).slideDown(function() {
-                setContentHeight();
-            });
-        }
-    });
-
-// toggle small or large menu 
-$MENU_TOGGLE.on('click', function() {
-
-		if ($BODY.hasClass('nav-md')) {
-			$SIDEBAR_MENU.find('li.active ul').hide();
-			$SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active');
-
-            $(this).find("i").removeClass("fa-angle-double-left").addClass("fa-angle-double-right");
-            $("#site-logo").removeClass("site_logo_normal").addClass("site_logo_small");
-            $("#site_name").hide();
-		} else {
-			$SIDEBAR_MENU.find('li.active-sm ul').show();
-			$SIDEBAR_MENU.find('li.active-sm').addClass('active').removeClass('active-sm');
-            $MENU_TOGGLE.find("i").removeClass("fa-angle-double-right").addClass("fa-angle-double-left");
-            $("#site-logo").removeClass("site_logo_small").addClass("site_logo_normal");
-            $("#site_name").show();
+			$('ul:first', $li).slideDown(function() {
+				setContentHeight();
+			});
 		}
 
-	$BODY.toggleClass('nav-md nav-sm');
 
-	setContentHeight();
-});
+  	});
+
+	// toggle small or large menu
+	$MENU_TOGGLE.on('click', function() {
+
+			if ($BODY.is('.nav-md')) {
+				$SIDEBAR_MENU.find('li.active ul').hide();
+				$SIDEBAR_MENU.find('li.active').addClass('active-sm').removeClass('active');
+
+				$(this).find("i").removeClass("fa-angle-double-left").addClass("fa-angle-double-right");
+				$("#site-logo").removeClass("site_logo_normal").addClass("site_logo_small");
+				$("#site_name").hide();
+			} else {
+				$SIDEBAR_MENU.find('li.active-sm ul').show();
+				$SIDEBAR_MENU.find('li.active-sm').addClass('active').removeClass('active-sm');
+				$MENU_TOGGLE.find("i").removeClass("fa-angle-double-right").addClass("fa-angle-double-left");
+				$("#site-logo").removeClass("site_logo_small").addClass("site_logo_normal");
+				$("#site_name").show();
+			}
+
+		$BODY.toggleClass('nav-md nav-sm');
+
+		setContentHeight();
+	});
 
 	// check active menu
-	$SIDEBAR_MENU.find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-page');
+	$SIDEBAR_MENU.find('a[href="' + CURRENT_URL + '"]').parent('li').addClass('current-parent');
+    $SIDEBAR_MENU.find('a').filter(function () {
+        return this.href == CURRENT_URL;
+    }).parent('li').addClass('current-parent');
 
-	$SIDEBAR_MENU.find('a').filter(function () {
-		return this.href == CURRENT_URL;
-	}).parent('li').addClass('current-page').parents('ul').slideDown(function() {
-		setContentHeight();
-	}).parent().addClass('active').find("span.fa").removeClass('fa-chevron-down').addClass('fa-chevron-up');
+
+
+    if ( $BODY.is( ".nav-md" ) )
+	{
+        $SIDEBAR_MENU.find('a').filter(function () {
+            return this.href == CURRENT_URL;
+        }).parent('li').addClass('current-page').parents('ul').slideDown(function() {
+            setContentHeight();
+        }).parent().addClass('active').find("span.fa").removeClass('fa-chevron-down').addClass('fa-chevron-up');
+
+    }
+
+    if ($BODY.is(".nav-sm"))
+	{
+		$("#sidebar-menu").find("ul > li.active").removeClass('active').addClass("current-parent");
+
+	}
 
 	// recompute content when resizing
 	$(window).smartresize(function(){  
@@ -153,7 +193,7 @@ $MENU_TOGGLE.on('click', function() {
 			mouseWheel:{ preventDefault: true }
 		});
 	}
-};
+};	// init_sidebar
 // /Sidebar
 
 	var randNum = function() {
@@ -1014,15 +1054,15 @@ if (typeof NProgress != 'undefined') {
 		  /* INPUTS */
 		  
 			function onAddTag(tag) {
-				alert("Added a tag: " + tag);
+				//alert("Added a tag: " + tag);
 			  }
 
 			  function onRemoveTag(tag) {
-				alert("Removed a tag: " + tag);
+				//alert("Removed a tag: " + tag);
 			  }
 
 			  function onChangeTag(input, tag) {
-				alert("Changed a tag: " + tag);
+				//alert("Changed a tag: " + tag);
 			  }
 
 			  //tags input
@@ -1043,7 +1083,7 @@ if (typeof NProgress != 'undefined') {
 		function init_select2() {
 			 
 			if( typeof (select2) === 'undefined'){ return; }
-			console.log('init_toolbox');
+			//console.log('init_toolbox');
 			 
 			$(".select2_single").select2({
 			  placeholder: "Select a state",
@@ -1051,8 +1091,8 @@ if (typeof NProgress != 'undefined') {
 			});
 			$(".select2_group").select2({});
 			$(".select2_multiple").select2({
-			  maximumSelectionLength: 4,
-			  placeholder: "With Max Selection limit 4",
+			//  maximumSelectionLength: 4,
+			//  placeholder: "With Max Selection limit 4",
 			  allowClear: true
 			});
 			
@@ -1478,7 +1518,7 @@ if (typeof NProgress != 'undefined') {
 		function init_InputMask() {
 			
 			if( typeof ($.fn.inputmask) === 'undefined'){ return; }
-			console.log('init_InputMask');
+		//	console.log('init_InputMask');
 			
 				$(":input").inputmask();
 				
@@ -1489,7 +1529,7 @@ if (typeof NProgress != 'undefined') {
 		function init_ColorPicker() {
 			
 			if( typeof ($.fn.colorpicker) === 'undefined'){ return; }
-			console.log('init_ColorPicker');
+		//	console.log('init_ColorPicker');
 			
 				$('.demo1').colorpicker();
 				$('.demo2').colorpicker();
@@ -1513,7 +1553,7 @@ if (typeof NProgress != 'undefined') {
 		function init_IonRangeSlider() {
 			
 			if( typeof ($.fn.ionRangeSlider) === 'undefined'){ return; }
-			console.log('init_IonRangeSlider');
+		//	console.log('init_IonRangeSlider');
 			
 			$("#range_27").ionRangeSlider({
 			  type: "double",

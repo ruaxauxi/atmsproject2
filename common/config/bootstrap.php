@@ -7,3 +7,4 @@ Yii::setAlias('@admintheme', dirname(dirname(__DIR__)) . '/atms/themes/default')
 Yii::setAlias("@avatar_url",  '/images/avatars');
 
 Yii::setAlias("@sitename", "vere.com");
+

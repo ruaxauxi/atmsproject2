@@ -31,10 +31,11 @@ class Address extends \yii\db\ActiveRecord
     const UNDELETED = 0;
 
     public $ward;
+    //public $ward_id;
     public $district;
-    public $district_id;
+    //public $district_id;
     public $province;
-    public $province_id;
+    //public $province_id;
 
     /**
      * @inheritdoc
@@ -81,8 +82,8 @@ class Address extends \yii\db\ActiveRecord
 
     public function isEmpty()
     {
-        return empty($this->house_number)  && empty($this->street) && empty($this->ward_id) && empty($this->district_id)
-                && empty($this->province_id);
+        return (empty($this->house_number)  && empty($this->street) && empty($this->ward_id) && empty($this->district_id)
+                && empty($this->province_id) );
     }
 
     /**
@@ -103,5 +104,12 @@ class Address extends \yii\db\ActiveRecord
         $district = District::findOne(['id' => $this->district_id]);
 
         $this->province_id = $district->province_id;
+    }
+
+    public function updateCurrentAddress()
+    {
+        Yii::$app->db->createCommand()
+            ->update('address', ['is_current' => 0], ['person_id' => $this->person_id] )
+            ->execute();
     }
 }

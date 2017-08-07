@@ -14,105 +14,203 @@ use yii\widgets\DetailView;
 //$this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="customer-request-view">
+<div class="_customer-request-view" id="_customer-request-view">
+    <span class="fa fa-th" ></span> Thông tin chi tiết
 
-    <h1 >MSKH: <?= Html::encode( ArrayHelper::getValue($model, "customer_id")) ?></h1>
+            <hr class="space5" />
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => ArrayHelper::getValue($model, "id")], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => ArrayHelper::getValue($model, "id")], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+                    <div class="label-group label-group-first-item">
+                        <label class="control-label " ><span class="fa  fa-angle-double-right"></span> Hạng vé: </label>
+                        <span class="label-group-value">
+                                <?= $model->ticketClass->class; ?>
+                            </span>
+                    </div>
 
-    <?php if ($model) { ?>
+                    <div class="label-group label-group-first-item">
+                        <label class="control-label " > Hành trình: </label>
+                        <span class="label-group-value">
+                            <?= $model->from_airport . " (" . $model->fromAirport->name . ")"  . " - " .
+                                $model->to_airport. " (" . $model->toAirport->name .  ")"
+                            ?>
+                        </span>
+                    </div>
 
-        <?= DetailView::widget([
-            'model' => $model,
-            'options'  => [
-                    'class' => 'table table-striped table-bordered detail-view mytable'
-            ],
-            'attributes' => [
-                [
-                    'label' => "Họ tên khách hàng",
-                    'value' => "<i><b>" .$model->customerGenderTextTitle . "</b></i>:  ".  $model->customerFullname,
-                    'format' => 'raw'
-                ],
-                [
-                    'label' => 'SĐT',
-                    'value' =>  $model->customerInfo->phone_number
-                ],
-                [
-                    'label' => 'ĐV công tác',
-                    'value' => $model->customerCompanyName->company
-                ],
-                [
-                    'label' => 'Chặn',
-                    'value' => $model->fromAirport->name . " (" . $model->from_airport . ")"  . " - " .
-                        $model->toAirport->name. " (" . $model->to_airport .  ")",
-                ],
+                    <div class="label-group">
+                        <label class="control-label" > Ngày khởi hành: </label>
+                        <span class="label-group-value">
+                            <?php
+                            $formatter = \Yii::$app->formatter;
 
-                [
-                    'label' => 'Ngày khởi hành',
-                    'value' => function($model){
-                        $formatter = \Yii::$app->formatter;
+                            echo  " đi <b>" . $formatter->asDate($model->departure, "dd-MM-yyyy")
+                                . "</b> - về <b>" .
+                                ($model->return?$formatter->asDate($model->return, "dd-MM-yyyy") .
+                                    "</b>":"không đặt</b>");
+                            ?>
+                        </span>
+                    </div>
 
-                        return "Đi ngày <b>" . $formatter->asDate($model->departure, "dd-MM-yyyy") . "</b> - Về ngày <b>" .
-                            ($model->return?$formatter->asDate($model->return, "dd-MM-yyyy") . "</b>":"không đặt</b>");
+                    <div class="label-group">
+                        <label class="control-label " > Số lượng vé: </label>
+                        <span class="label-group-value">
+                            <?php
+                            echo  ($model->adult + $model->children + $model->infant) ."</span>  (". $model->adult  .  "  - người lớn" .
+                            (empty($model->children)?"":"; " . "$model->children " .
+                                " - trẻ em") .
+                            (empty($model->infant)?")":"; "
+                                ."$model->infant  - em bé)");
+                            ?>
+                        </span>
+                    </div>
 
-                    },
-                    'format'    => 'raw'
+                    <div class="label-group">
+                        <label class="control-label " > Trạng thái: </label>
+                        <span class="label-group-value">
+                            <?php
+                                $status = "Không xác định";
+                            if ((int) $model->status == \atms\models\CustomerRequests::CUSTOMER_REQUEST_STATUS_WAITING )
+                            {
+                                $status =     "<span class='fa fa-clock-o request-status '></span> Chờ xử lý";
+                            }else if ((int) $model->status == \atms\models\CustomerRequests::CUSTOMER_REQUEST_STATUS_CHECKED )
+                            {
+                                $status =     "<span class='fa fa-check request-status-success ' ></span> Đã xử lý";
 
-                ],
+                            }else if( (int) $model->status ==  \atms\models\CustomerRequests::CUSTOMER_REQUEST_STATUS_CANCELlED)
+                            {
+                                $status  =    "<span class='fa fa-remove request-status-primary' ></span> Đã huỷ yêu cầu ";
+                            }
 
-                [
-                    'label' => 'Số lượng vé',
-                    'format'    => 'raw',
-                    'value' =>  "<span class='badge bg-green'>$model->adult</span>".  " - người lớn" .
-                        (empty($model->children)?"":"; " . "<span class='badge bg-green'>$model->children</span>" . " - trẻ em") .
-                        (empty($model->infant)?"":"; " ."<span class='badge bg-green'>$model->infant</span>" . " - em bé"),
-                ],
+                            echo $status;
 
-                [
-                    'label' => 'Ghi chú',
-                    'value' => $model->note,
-                ],
-                [
-                    'label' => 'Người nhập',
-                    'value' => $model->creatorFullname . " (". $model->creator->username .")",
-                ],
-                [
-                    'label' => 'Yêu cầu xử lý',
-                    'value' => $model->examinerFullname . " (" . $model->assignedTo->username . ")",
-                ],
-                [
-                    'label' => 'Người xử lý',
-                    'value' =>  isset($model->handlerFullname)? $model->handlerFullname .  " (". $model->processedBy->username .")" : "Chưa xử lý",
-                ],
+                            ?>
+                        </span>
+                    </div>
 
-                [
-                    'label' => 'Ngày nhập',
-                    'value' => $model->departure,
-                    'format'    => ['date', 'dd-M-Y H:i:s']
-                ],
-                [
-                    'label' => 'Ngày xử lý',
-                    'value' => $model->processed_at,
-                    'format'    => ['date', 'dd-M-Y H:i:s']
-                ]
+                </div>
+            </div>
 
-            ]
-        ]) ?>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="label-group label-group-first-item">
+                        <label class="control-label  " ><span class="fa  fa-angle-double-right"></span> <i> Ghi chú:</i> </label>
+                        <span class="label-group-value">
+                            <?= $model->note; ?>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--<div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="label-group label-group-first-item">
+                        <label class="control-label  " ><span class="fa  fa-angle-double-right"></span> <i>Liên hệ</i></label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="label-group">
+                        <label class="control-label " > SĐT: </label>
+                        <span class="label-group-value">
+                            <?/*= $model->customerInfo->phone_number; */?>
+                        </span>
+                    </div>
+                    <div class="label-group">
+                        <label class="control-label " > Email: </label>
+                        <span class="label-group-value">
+                                <?/*= $model->customerInfo->email; */?>
+                            </span>
+                    </div>
+
+                    <div class="label-group">
+                        <label class="control-label " > Ngày sinh: </label>
+                        <span class="label-group-value">
+                           <?php
+/*                           $formatter = \Yii::$app->formatter;
+                           echo  $formatter->asDate($model->customerInfo->birthdate, "dd-MM-yyyy");
+                           */?>
+                        </span>
+                    </div>
+
+                    <div class="label-group">
+                        <label class="control-label " > ĐV công tác: </label>
+                        <span class="label-group-value">
+                           <?/*=  $model->customerCompanyName->company; */?>
+                        </span>
+                    </div>
 
 
-    <?php } else { ?>
+                </div>
+            </div>-->
 
-        <h4>Không tìm thấy thông tin khách hàng.</h4>
+           <!-- <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="label-group">
+                        <label class="control-label  " > Địa chỉ: </label>
+                        <span class="label-group-value">
+                            <?/*= $model->customerInfo->addressFullAddress; */?>
+                        </span>
+                    </div>
 
-    <?php  } ?>
+                </div>
+            </div>-->
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="label-group label-group-first-item ">
+                        <label class="control-label " ><span class="fa  fa-angle-double-right"></span> Ngày nhập : </label>
+                        <span class="label-group-value">
+                            <?php
+                            $formatter = \Yii::$app->formatter;
+                            echo  $formatter->asDate($model->created_at, "dd-MM-yyyy H:I:s");
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="label-group">
+                        <label class="control-label  " > Ngày xử lý : </label>
+                        <span class="label-group-value">
+                            <?php
+
+                            if ($model->processed_at)
+                            {
+                                $formatter = \Yii::$app->formatter;
+                                echo  $formatter->asDate($model->processed_at, "dd-MM-yyyy");
+                            }else{
+                                echo " ";
+                            }
+
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="label-group">
+                        <label class="control-label  " > NV nhập: </label>
+                        <span class="label-group-value">
+                            <?= $model->creatorFullname . " (". $model->creator->username .")"; ?>
+                        </span>
+                    </div>
+
+                    <div class="label-group">
+                        <label class="control-label  " > NV xử lý: </label>
+                        <span class="label-group-value">
+                            <?= $model->examinerFullname . " (" . $model->assignedTo->username . ")"; ?>
+                        </span>
+                    </div>
+
+                    <div class="label-group">
+                        <label class="control-label  " > Xử lý bởi: </label>
+                        <span class="label-group-value">
+                            <?= isset($model->handlerFullname)? $model->handlerFullname .  " (".
+                                $model->processedBy->username .")" : "Chưa xử lý"; ?>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        <hr class="space5"/>
 
 </div>

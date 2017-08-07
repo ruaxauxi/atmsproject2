@@ -9,8 +9,10 @@ GentelellaExtension = {
         if (this.getCookie('menuIsCollapsed') == 'true') {
             jQuery('#menu_toggle').trigger('click');
         }
+
+
         jQuery('#menu_toggle').click(function() {
-            GentelellaExtension.setCookie('menuIsCollapsed', jQuery('body').hasClass('nav-sm'), undefined, '/');
+            GentelellaExtension.setCookie('menuIsCollapsed', jQuery('body').hasClass('nav-md'), undefined, '/');
         });
     },
     'getCookie': function (name) {

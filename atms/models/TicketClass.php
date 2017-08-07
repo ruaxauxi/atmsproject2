@@ -11,7 +11,7 @@ use Yii;
  * @property string $class
  * @property string $code
  *
- * @property CustomerRequest[] $customerRequests
+ * @property CustomerRequests[] $customerRequests
  * @property TicketDetail[] $ticketDetails
  */
 class TicketClass extends \yii\db\ActiveRecord
@@ -44,8 +44,8 @@ class TicketClass extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'class' => 'Class',
-            'code' => 'Code',
+            'class' => 'Hạng vé',
+            'code' => 'Mã hạng vé',
         ];
     }
 
@@ -54,7 +54,7 @@ class TicketClass extends \yii\db\ActiveRecord
      */
     public function getCustomerRequests()
     {
-        return $this->hasMany(CustomerRequest::className(), ['ticket_class_id' => 'id']);
+        return $this->hasMany(CustomerRequests::className(), ['ticket_class_id' => 'id']);
     }
 
     /**
@@ -63,6 +63,11 @@ class TicketClass extends \yii\db\ActiveRecord
     public function getTicketDetails()
     {
         return $this->hasMany(TicketDetail::className(), ['ticket_class_id' => 'id']);
+    }
+
+    public static function getTicketClasses()
+    {
+        return static::findAll(['deleted' => 0]);
     }
 
     /**

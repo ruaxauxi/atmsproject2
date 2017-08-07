@@ -1,10 +1,16 @@
 <?php
+/**
+ * Copyright (c) 2017 by Dang Vo
+ */
 
 namespace atms\models;
 
 use Yii;
 use atms\models\Customer;
 use atms\models\Employee;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+
 
 /**
  * This is the model class for table "{{%customer_request}}".
@@ -27,6 +33,7 @@ use atms\models\Employee;
  * @property integer $children
  * @property integer $infant
  * @property integer $deleted
+ * @property string $processed_at
  *
  * @property User $assignedTo
  * @property User $processedBy
@@ -39,7 +46,9 @@ use atms\models\Employee;
 class CustomerRequest extends \yii\db\ActiveRecord
 {
 
-
+    const CUSTOMER_REQUEST_STATUS_WAITING = 1;
+    const CUSTOMER_REQUEST_STATUS_CHECKED = 2;
+    const CUSTOMER_REQUEST_STATUS_CANCELlED = 3;
 
     /**
      * @inheritdoc
@@ -57,7 +66,7 @@ class CustomerRequest extends \yii\db\ActiveRecord
         return [
             [['creator_id', 'customer_id', 'from_airport', 'to_airport', 'ticket_class_id', 'departure', 'adult'], 'required'],
             [['creator_id', 'customer_id', 'ticket_class_id', 'status', 'checked', 'processed_by', 'assigned_to', 'adult', 'children', 'infant', 'deleted'], 'integer'],
-            [['departure', 'return', 'created_at'], 'safe'],
+            [['departure', 'return', 'created_at', 'processed_at'], 'safe'],
             [['note'], 'string'],
             [['from_airport', 'to_airport'], 'string', 'max' => 3],
             [['assigned_to'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['assigned_to' => 'id']],
@@ -79,21 +88,42 @@ class CustomerRequest extends \yii\db\ActiveRecord
             'id' => 'ID',
             'creator_id' => 'Creator ID',
             'customer_id' => 'Customer ID',
-            'from_airport' => 'From Airport',
-            'to_airport' => 'To Airport',
+            'from_airport' => 'Sân bay Đi',
+            'to_airport' => 'Sân bay Đến',
             'ticket_class_id' => 'Ticket Class ID',
-            'departure' => 'Departure',
-            'return' => 'Return',
-            'note' => 'Note',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'checked' => 'Checked',
-            'processed_by' => 'Processed By',
-            'assigned_to' => 'Assigned To',
-            'adult' => 'Adult',
-            'children' => 'Children',
-            'infant' => 'Infant',
-            'deleted' => 'Deleted',
+            'departure' => 'Ngày khởi hành',
+            'return' => 'Ngày về',
+            'note' => 'Ghi chú',
+            'status' => 'Trạng thái',
+            'created_at' => 'Ngày tạo',
+            'checked' => 'Đã xử lý',
+            'processed_by' => 'Xử lý bởi',
+            'assigned_to' => 'NV xử lý',
+            'adult' => 'Người lớn',
+            'children' => 'Trẻ em',
+            'infant' => 'Em bé',
+            'deleted' => 'Đã xoá',
+            'processed_at'  => 'Ngày xử lý'
+        ];
+    }
+
+    public function behaviors() {
+
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at'],
+                   // ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+
+                'createdAtAttribute' => 'created_at',
+                //'updatedAtAttribute' => 'updated_at',
+                //'value' => new Expression('NOW()'),
+                'value'     => date("Y-m-d H:i:s"),
+                // if you're using datetime instead of UNIX timestamp:
+                // 'value' => new Expression('NOW()'),
+            ],
         ];
     }
 
@@ -116,6 +146,15 @@ class CustomerRequest extends \yii\db\ActiveRecord
     public function getExaminerFullname()
     {
         $a[] = $this->examinerInfo->lastname;
+        $a[] = $this->examinerInfo->middlename;
+        $a[] = $this->examinerInfo->firstname;
+
+        return implode(" ", array_filter($a));
+    }
+
+    public function getExaminerFullnameShort()
+    {
+        $a[] = substr($this->examinerInfo->lastname,0,1);
         $a[] = $this->examinerInfo->middlename;
         $a[] = $this->examinerInfo->firstname;
 
@@ -288,6 +327,19 @@ class CustomerRequest extends \yii\db\ActiveRecord
     public static function findRequestsInfo()
     {
         return static::find()->where(['deleted' => 0]);
+    }
+
+    public static function findRequestsInfoByCustomerID($customer_id, $orderBy = null)
+    {
+        if ($orderBy && is_array($orderBy))
+        {
+            return static::find()->where(['deleted' => 0, 'customer_id' => $customer_id])
+                ->orderBy($orderBy);
+        }else{
+            return static::find()->where(['deleted' => 0, 'customer_id' => $customer_id])
+                ->orderBy(["departure" => 'DESC']);
+        }
+
     }
 
     public static function findRequestInfo($id)

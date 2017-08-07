@@ -26,20 +26,21 @@ class User extends \yii\web\User {
 
 
         $u = new UserProfile();
-        $u->getUserProfile(\Yii::$app->user->identity->id);
+        $userid = isset(\Yii::$app->user->identity->id)?\Yii::$app->user->identity->id:null;
+        $u->getUserProfile($userid);
         $this->userProfile = $u;
         return $u;
     }
     
     public function getUsername(){
-        return \Yii::$app->user->identity->username;
+        return isset(\Yii::$app->user->identity->username)?\Yii::$app->user->identity->username:null;
     }
     
     public function getFullname()
     {
         if ($this->userProfile !=null)
         {
-            
+
             return $this->userProfile->getFullname();
         }
         else
@@ -48,12 +49,29 @@ class User extends \yii\web\User {
             return $this->userProfile->getFullname();
         }
     }
+
+    public function getUserRole()
+    {
+        return \Yii::$app->user->identity->getUserRole();
+    }
+
+    public function getGender()
+    {
+        if ($this->userProfile !=null)
+        {
+            return $this->userProfile->getGender();
+
+        }else{
+            $this->getUserProfile();
+            return $this->userProfile->getGender();
+        }
+    }
     
      public function getAvatar()
     {
         if ($this->userProfile !=null)
         {
-            
+
             return $this->userProfile->getAvatar();
         }
         else
