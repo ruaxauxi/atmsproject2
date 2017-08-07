@@ -17,6 +17,8 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/fullscreen.js',
+        'js/autosize.min.js',
+        'js/jquery.slimscroll.min.js',
         'js/js.cookie.js',
         'js/home.js',
     ];
@@ -31,8 +33,10 @@ class AppAsset extends AssetBundle
         'atms\themes\admin\ThemeAsset',
         'atms\themes\admin\VelocityAsset',
         'atms\themes\admin\PNotifyAsset',
+        'atms\themes\admin\BootstrapToggleAsset',
         'atms\themes\admin\ExtensionAsset',
         'atms\themes\admin\DataTablesAsset',
+        'atms\themes\admin\TooltipsterAsset',
         
     ];
 
